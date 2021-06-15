@@ -1,0 +1,49 @@
+<template>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="navbar-brand">
+            <router-link to="/">
+                <a>Home</a>
+                <!-- <img src="@/assets/logo.svg" class="logo" alt="Logo"/> -->
+            </router-link>
+        </div>
+        <button
+        class="navbar-toggler"
+        data-toggle="collapse"
+        data-target="#navbarMenu"
+        >
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+        
+        <ul class="navbar-nav" id="navbar-ul">
+        <li class="nav-item">
+          <router-link to="/overview" class="deco-none">
+            <a class="nav-link">Artikelübersicht</a>
+          </router-link>
+        </li>
+
+        <li class="nav-item">
+            <router-link to="/user" class="deco-none">
+                <a class="nav-link">Konto</a>
+            </router-link>
+        </li>
+
+        <li>
+            <router-link to="/login" class="deco-none">
+                <a class="nav-link">Login</a>
+            </router-link>
+        </li>
+        </ul>
+        </div>
+    </nav>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
+
+</style>
