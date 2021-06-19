@@ -3,28 +3,35 @@ import Home from '@/components/Home.vue'
 import Login from '@/components/login/Login.vue'
 import User from '@/components/user/User.vue'
 import Overview from '@/components/overview/Overview.vue'
+import SignUp from '@/components/signUp/SignUp.vue'
+import { Path } from '../constants/Path'
 
 const routes = [
   {
-    path: '/',
+    path: Path.HOME,
     name: 'Home',
     component: Home
   },
   {
-    path: '/login',
+    path: Path.LOGIN,
     name: 'Login',
     component: Login
   },
   {
-    path: '/overview',
+    path: Path.OVERVIEW,
     name: 'Overview',
     component: Overview
   },
   {
-    path: '/user',
+    path: Path.USER,
     name: 'User',
     component: User
-  }
+  },
+  {
+    path: Path.SIGNUP,
+    name: 'SignUp',
+    component: SignUp
+  },
 ]
 
 const router = createRouter({
