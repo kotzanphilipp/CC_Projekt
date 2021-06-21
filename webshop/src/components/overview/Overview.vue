@@ -1,12 +1,16 @@
 <template>
   <h1>Overview</h1>
-  <div v-for="product in products" v-bind:key="product.id">
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" :src="product.produktImageURL" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">{{ product.produktName }}</h5>
-        <p class="card-text">{{ product.produktPreis }}</p>
-        <a @click="addToCart" class="btn btn-primary">Warenkorb legen</a>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4" v-for="product in products" v-bind:key="product.id">
+        <div class="card" style="width: 18rem;">
+          <img class="card-img-top" :src="product.produktImageURL" alt="Card image cap" height="240" width="180">
+          <div class="card-body text-center">
+            <h5 class="card-title text-center">{{ product.produktName }}</h5>
+            <p class="card-text text-center">{{ product.produktPreis }}</p>
+            <a @click="addToCart(product)" class="btn btn-primary">Warenkorb legen</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,12 +25,14 @@ export default {
   name: "Overview",
   setup(){
     let products = reactive([])
+    let cart = reactive([])
 
     onBeforeMount(() => {
       fetchProducts().then(function() {
         fetchProductsURL()
-        .then(function (){
-          console.log("fetching urls done")
+        .then(function(){
+          cart.push(localStorage.getItem("cart"))
+          console.log("Products URLs fetched")
         })
       });
     });
@@ -52,13 +58,15 @@ export default {
           });
     }
 
-    function addToCart(){
-      console.log("Product to cart added");
+    function addToCart(product){
+      cart.push(product)
+      localStorage.setItem("cart", cart);
     }
 
     return {
       addToCart,
-      products
+      products,
+      cart
     };
   }
 };
