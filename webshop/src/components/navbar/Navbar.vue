@@ -32,6 +32,13 @@
             <a class="nav-link">Login</a>
           </router-link>
         </li>
+
+        <li>
+          <router-link to="/shoppingcart" class="deco-none">
+            <a class="nav-link">Warenkorb</a>
+          </router-link>
+        </li>
+
       </ul>
     </div>
   </nav>

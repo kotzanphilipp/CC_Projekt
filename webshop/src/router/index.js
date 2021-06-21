@@ -4,6 +4,7 @@ import Login from '@/components/login/Login.vue'
 import User from '@/components/user/User.vue'
 import Overview from '@/components/overview/Overview.vue'
 import SignUp from '@/components/signUp/SignUp.vue'
+import ShoppingCart from "../components/shoppingCart/ShoppingCart";
 import { Path } from '../constants/Path'
 
 const routes = [
@@ -31,6 +32,11 @@ const routes = [
     path: Path.SIGNUP,
     name: 'SignUp',
     component: SignUp
+  },
+  {
+    path: Path.SHOPPINGCART,
+    name: 'ShoppingCart',
+    component: ShoppingCart
   },
 ]
 
