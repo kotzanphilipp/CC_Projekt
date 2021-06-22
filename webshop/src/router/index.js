@@ -6,6 +6,7 @@ import Overview from "@/components/overview/Overview.vue";
 import SignUp from "@/components/signUp/SignUp.vue";
 import Admin from "@/components/admin/Admin.vue";
 import AddProduct from "@/components/addProduct/AddProduct.vue";
+import EditProduct from "@/components/editProduct/EditProduct.vue";
 import ShowAllProducts from "@/components/showAllProducts/ShowAllProducts.vue";
 import ShowAllUsers from "@/components/showAllUsers/ShowAllUsers.vue";
 import { Path } from "../constants/Path";
@@ -45,6 +46,11 @@ const routes = [
     path: Path.ADDPRODUCT,
     name: "AddProduct",
     component: AddProduct,
+  },
+  {
+    path: Path.EDITPRODUCT,
+    name: "EditProduct",
+    component: EditProduct,
   },
   {
     path: Path.SHOWALLPRODUCTS,

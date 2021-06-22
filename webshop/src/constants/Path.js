@@ -6,6 +6,7 @@ export class Path {
   static USER = "/user";
   static ADMIN = "/admin";
   static ADDPRODUCT = "/addProduct";
+  static EDITPRODUCT = "/editProduct/:id&:name&:price&:description&:image";
   static SHOWALLPRODUCTS = "/showAllProducts";
   static SHOWALLUSERS = "/showAllUsers";
 }

@@ -1,11 +1,15 @@
 <template>
   <div>
-    <router-link to="/admin" class="deco-none">
+    <router-link to="/showAllProducts" class="deco-none">
       <button>zurück</button>
     </router-link>
-    <h1>Artikel hinzufügen</h1>
-    <form id="addProduct-form" v-on:submit="addProduct">
+    <h1>Artikel bearbeiten</h1>
+    <form
+      id="editProduct-form"
+      v-on:submit.prevent="editProduct($route.params.id)"
+    >
       <label for="productName">Artikel Name:</label><br />
+
       <input
         type="text"
         class="inputFields"
@@ -15,6 +19,7 @@
         required
       /><br /><br />
       <label for="productPrice">Artikel Preis:</label><br />
+
       <input
         type="text"
         class="inputFields"
@@ -24,6 +29,7 @@
         required
       /><br /><br />
       <label for="productDescription">Artikel Beschreibung:</label><br />
+
       <input
         type="text"
         class="inputFields"
@@ -46,42 +52,45 @@
 </template>
 <script>
 export default {
-  name: "AddProduct",
+  name: "EditProduct",
+
   data() {
     return {
       form: {
-        productName: "",
-        productPrice: "",
-        productDescription: "",
+        productName: this.$route.params.name,
+        productPrice: this.$route.params.price,
+        productDescription: this.$route.params.description,
       },
     };
   },
   methods: {
-    async addProduct(e) {
-      e.preventDefault(); // it prevent from page reload and prevent inputfield removal
+    async editProduct(ID) {
+      //e.preventDefault(); // it prevent from page reload and prevent inputfield removal
       const cloudfunctions_produkts_API_URL =
         "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
 
-      var imageName = document.getElementById("productImage").value;
+      //var imageName = document.getElementById("productImage").value;
 
-      await fetch(cloudfunctions_produkts_API_URL, {
-        method: "POST",
+      await fetch(cloudfunctions_produkts_API_URL + ID, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           produktName: this.form.productName,
-          produktPreis: this.form.productPrice + " $",
+          produktPreis: this.form.productPrice,
           produktBeschreibung: this.form.productDescription,
-          produktImage: imageName.split(/(\\|\/)/g).pop(),
+          produktImage: this.$route.params.image,
         }),
       })
-        .then(console.log("The Product is Successfully Created"))
+        .then((res) => console.log(res))
+        .then(console.log("The Product is Successfully Updated"))
         .catch((error) => console.log("Error", error));
-
-      // Empty The Input Fields after Submit
-      document.forms["addProduct-form"].reset();
+      this.$router.push({ name: "ShowAllProducts" });
     },
+  },
+  created() {
+    console.log("Produkt-ID = " + this.$route.params.id);
   },
 };
 </script>
