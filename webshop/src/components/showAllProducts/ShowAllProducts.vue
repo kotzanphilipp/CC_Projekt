@@ -3,6 +3,9 @@
     <router-link to="/admin" class="deco-none">
       <button>zurück</button>
     </router-link>
+    <router-link to="/addProduct" class="deco-none">
+      <button>Artikel hinzufügen</button>
+    </router-link>
     <h1>Alle Artikeln anzeigen</h1>
     <div class="container">
       <div class="row">

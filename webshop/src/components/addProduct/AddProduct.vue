@@ -4,7 +4,7 @@
       <button>zurück</button>
     </router-link>
     <h1>Artikel hinzufügen</h1>
-    <form id="addProduct-form" v-on:submit="addProduct">
+    <form id="addProduct-form" v-on:submit.prevent="addProduct_firebase">
       <label for="productName">Artikel Name:</label><br />
       <input
         type="text"
@@ -47,6 +47,7 @@
 <script>
 export default {
   name: "AddProduct",
+
   data() {
     return {
       form: {
@@ -57,8 +58,7 @@ export default {
     };
   },
   methods: {
-    async addProduct(e) {
-      e.preventDefault(); // it prevent from page reload and prevent inputfield removal
+    async addProduct_firebase() {
       const cloudfunctions_produkts_API_URL =
         "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
 
@@ -76,11 +76,28 @@ export default {
           produktImage: imageName.split(/(\\|\/)/g).pop(),
         }),
       })
+        .then(this.addProductImage_storage())
         .then(console.log("The Product is Successfully Created"))
         .catch((error) => console.log("Error", error));
 
       // Empty The Input Fields after Submit
       document.forms["addProduct-form"].reset();
+    },
+    async addProductImage_storage() {
+      const cloudfunctions_imageService_API_URL =
+        "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/upload2";
+      console.log("Hallo from addProductImage_storage");
+
+      const imageName = document.getElementById("productImage");
+      const formData = new FormData();
+      formData.append("file", imageName.files[0]);
+
+      await fetch(cloudfunctions_imageService_API_URL, {
+        method: "POST",
+        body: formData,
+      })
+        //.then((response) => console.log(response))
+        .catch((error) => console.log(error));
     },
   },
 };
