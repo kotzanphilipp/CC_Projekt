@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-4" v-for="product in products" v-bind:key="product.id">
         <div class="card" style="width: 18rem;">
-          <img class="card-img-top" :src="product.produktImageURL" alt="Card image cap" height="240" width="180">
+          <img class="card-img-top" :src="product.produktImageURL" alt="no picture available" height="240" width="180">
           <div class="card-body text-center">
             <h5 class="card-title text-center">{{ product.produktName }}</h5>
             <p class="card-text text-center">{{ product.produktPreis }}</p>
@@ -31,11 +31,12 @@ export default {
       fetchProducts().then(function() {
         fetchProductsURL()
         .then(function(){
-          cart.push(localStorage.getItem("cart"))
-          console.log("Products URLs fetched")
+          readLocalStorageCart().then(function(){
+          })
         })
       });
     });
+
     async function fetchProducts(){
       await axios.get("https://europe-west3-webshop-316612.cloudfunctions.net/produkte")
         .then(function (response) {
@@ -57,10 +58,19 @@ export default {
               })
           });
     }
-
+    
+    async function readLocalStorageCart(){
+      var data = JSON.parse(localStorage[cart])
+      data.forEach(function(item){
+        if(item != null){
+          cart.push(JSON.stringify(item));
+        }
+      })
+    }
+    
     function addToCart(product){
       cart.push(product)
-      localStorage.setItem("cart", cart);
+      localStorage["cart"] = JSON.stringify(cart);
     }
 
     return {
