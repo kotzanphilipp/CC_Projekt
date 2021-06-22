@@ -8,7 +8,7 @@
       <div class="row">
         <div
           class="col-sm-4"
-          v-for="product in products"
+          v-for="(product, index) in products"
           v-bind:key="product.id"
         >
           <div class="card" style="width: 18rem;">
@@ -36,7 +36,9 @@
               >
                 <a class="btn btn-primary">Bearbeiten</a>
               </router-link>
-              <a @click="deleteProdukt(product.id)" class="btn btn-danger"
+              <a
+                @click="deleteProdukt(product.id, index)"
+                class="btn btn-danger"
                 >Löschen</a
               >
             </div>
@@ -93,12 +95,13 @@ export default {
       });
     }
 
-    async function deleteProdukt(ID) {
-      console.log("product: " + ID);
+    async function deleteProdukt(ID, index) {
+      console.log("product_ID: " + ID);
       axios
         .delete(cloudfunctions_produkts_API_URL + ID)
         .then(function() {
-          // this.$forceUpdate(); //doesn't work
+          // Delete The Product From the Array
+          products.splice(index, 1);
           console.log("Product is Deleted Successfully");
         })
         .catch(function(error) {
