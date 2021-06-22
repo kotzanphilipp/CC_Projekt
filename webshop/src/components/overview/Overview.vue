@@ -60,17 +60,20 @@ export default {
     }
     
     async function readLocalStorageCart(){
-      var data = JSON.parse(localStorage[cart])
+      cart.forEach(function() {
+        cart.pop();
+      })
+      var data = JSON.parse(localStorage["cart"])
       data.forEach(function(item){
         if(item != null){
-          cart.push(JSON.stringify(item));
+          cart.push(item);
         }
       })
     }
     
     function addToCart(product){
-      cart.push(product)
-      localStorage["cart"] = JSON.stringify(cart);
+        cart.push(product)
+        localStorage["cart"] = JSON.stringify(cart);
     }
 
     return {
