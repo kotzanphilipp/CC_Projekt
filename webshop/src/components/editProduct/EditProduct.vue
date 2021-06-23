@@ -88,7 +88,7 @@ export default {
         .catch((error) => console.log("Error", error));
       this.imageChanged();
       // Redirect the Page automatically to "ShowAllProducts" Page
-      // this.$router.push({ name: "ShowAllProducts" });
+      this.$router.push({ name: "ShowAllProducts" });
     },
     async imageChanged() {
       if (this.imageChangedBoolean) {
