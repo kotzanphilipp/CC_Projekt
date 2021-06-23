@@ -4,4 +4,5 @@ export class Path {
     static SIGNUP = "/signup";
     static OVERVIEW = "/overview";
     static USER = "/user";
+    static SHOPPINGCART = "/shoppingcart";
 }
