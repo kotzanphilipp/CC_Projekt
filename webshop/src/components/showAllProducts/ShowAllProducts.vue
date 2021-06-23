@@ -39,9 +39,7 @@
               >
                 <a class="btn btn-primary">Bearbeiten</a>
               </router-link>
-              <a
-                @click="deleteProdukt(product.id, index)"
-                class="btn btn-danger"
+              <a @click="deleteProdukt(product, index)" class="btn btn-danger"
                 >Löschen</a
               >
             </div>
@@ -64,8 +62,10 @@ export default {
 
     const cloudfunctions_produkts_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
-    const cloudfunctions_imageService_API_URL =
+    const cloudfunctions_imageService_GET_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/getURL?product=";
+    const cloudfunctions_imageService_DELETE_API_URL =
+      "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/delete?product=";
 
     onBeforeMount(() => {
       fetchProducts().then(function() {
@@ -88,7 +88,7 @@ export default {
     async function fetchProductsURL() {
       products.forEach((product) => {
         axios
-          .get(cloudfunctions_imageService_API_URL + product.produktImage)
+          .get(cloudfunctions_imageService_GET_API_URL + product.produktImage)
           .then(function(response) {
             product.produktImageURL = response.data;
           })
@@ -98,11 +98,12 @@ export default {
       });
     }
 
-    async function deleteProdukt(ID, index) {
-      console.log("product_ID: " + ID);
+    async function deleteProdukt(product, index) {
+      console.log("product_ID: " + product.id);
       axios
-        .delete(cloudfunctions_produkts_API_URL + ID)
+        .delete(cloudfunctions_produkts_API_URL + product.id)
         .then(function() {
+          deleteProduktImage(product);
           // Delete The Product From the Array
           products.splice(index, 1);
           console.log("Product is Deleted Successfully");
@@ -112,8 +113,20 @@ export default {
         });
     }
 
+    async function deleteProduktImage(product) {
+      axios
+        .get(cloudfunctions_imageService_DELETE_API_URL + product.produktImage)
+        .then(function() {
+          console.log("Product Image is Deleted Successfully");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+
     return {
       products,
+      deleteProduktImage,
       deleteProdukt,
     };
   },

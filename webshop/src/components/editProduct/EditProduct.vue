@@ -44,7 +44,7 @@
         class="inputFields"
         id="productImage"
         name="productImage"
-        required
+        v-on:change="onChange"
       /><br /><br />
       <input type="submit" value="hinzufügen" />
     </form>
@@ -53,9 +53,9 @@
 <script>
 export default {
   name: "EditProduct",
-
   data() {
     return {
+      imageChangedBoolean: false,
       form: {
         productName: this.$route.params.name,
         productPrice: this.$route.params.price,
@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     async editProduct(ID) {
-      //e.preventDefault(); // it prevent from page reload and prevent inputfield removal
       const cloudfunctions_produkts_API_URL =
         "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
 
@@ -83,10 +82,25 @@ export default {
           produktImage: this.$route.params.image,
         }),
       })
-        .then((res) => console.log(res))
+        // .then((res) => console.log(res))
+        // .then(this.imageChanged())
         .then(console.log("The Product is Successfully Updated"))
         .catch((error) => console.log("Error", error));
-      this.$router.push({ name: "ShowAllProducts" });
+      this.imageChanged();
+      // Redirect the Page automatically to "ShowAllProducts" Page
+      // this.$router.push({ name: "ShowAllProducts" });
+    },
+    async imageChanged() {
+      if (this.imageChangedBoolean) {
+        console.log("The image is Changed !!!");
+        return true;
+      } else {
+        console.log("The Image didn't Change");
+        return false;
+      }
+    },
+    onChange() {
+      this.imageChangedBoolean = true;
     },
   },
   created() {

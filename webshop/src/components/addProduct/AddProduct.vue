@@ -83,10 +83,10 @@ export default {
       // Empty The Input Fields after Submit
       document.forms["addProduct-form"].reset();
     },
+
     async addProductImage_storage() {
       const cloudfunctions_imageService_API_URL =
         "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/upload2";
-      console.log("Hallo from addProductImage_storage");
 
       const imageName = document.getElementById("productImage");
       const formData = new FormData();
