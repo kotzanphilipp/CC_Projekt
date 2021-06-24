@@ -12,7 +12,7 @@
                 v-for="(m, index) in markers"
                 :position="m.position"
                 :clickable="true"
-                :draggable="false"
+                :draggable="true"
                 @click="center=m.position"
             />
           </GMapCluster>
