@@ -40,7 +40,7 @@
         </li>
 
         <li>
-          <router-link to="/lokation" class="deco-none">
+          <router-link to="/standort" class="deco-none">
             <a class="nav-link">Standort</a>
           </router-link>
         </li>
