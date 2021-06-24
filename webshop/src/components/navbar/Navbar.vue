@@ -39,12 +39,6 @@
           </router-link>
         </li>
 
-        <li>
-          <router-link to="/lokation" class="deco-none">
-            <a class="nav-link">Standort</a>
-          </router-link>
-        </li>
-
       </ul>
     </div>
   </nav>
