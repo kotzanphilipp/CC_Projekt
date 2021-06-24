@@ -10,5 +10,4 @@ export class Path {
   static EDITPRODUCT = "/editProduct/:id&:name&:price&:description&:image";
   static SHOWALLPRODUCTS = "/showAllProducts";
   static SHOWALLUSERS = "/showAllUsers";
-  static GOOGLEMAP = "/lokation";
 }
