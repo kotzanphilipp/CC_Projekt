@@ -11,6 +11,7 @@ import EditProduct from "@/components/editProduct/EditProduct.vue";
 import ShowAllProducts from "@/components/showAllProducts/ShowAllProducts.vue";
 import ShowAllUsers from "@/components/showAllUsers/ShowAllUsers.vue";
 import { Path } from "../constants/Path";
+import GoogleMap from "../components/googleMap/GoogleMap";
 
 const routes = [
   {
@@ -67,6 +68,11 @@ const routes = [
     path: Path.SHOWALLUSERS,
     name: "ShowAllUsers",
     component: ShowAllUsers,
+  },
+  {
+    path: Path.GOOGLEMAP,
+    name: "GoogleMap",
+    component: GoogleMap,
   },
 ];
 
