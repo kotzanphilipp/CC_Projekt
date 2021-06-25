@@ -49,7 +49,7 @@ export default {
       console.log("nutzer_Email: " + nutzer.email);
       axios
         .delete(
-          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo/delete/nutzer=" +
+          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo/delete/" +
             nutzer.email
         )
         .then(function() {
