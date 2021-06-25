@@ -1,10 +1,12 @@
 <template>
   <div>
     <router-link to="/admin" class="deco-none">
-      <button>zurück</button>
+      <button class="btn btn-warning btn-all-products">zurück</button>
     </router-link>
     <router-link to="/addProduct" class="deco-none">
-      <button>Artikel hinzufügen</button>
+      <button class="btn btn-warning btn-all-products">
+        Artikel hinzufügen
+      </button>
     </router-link>
     <h1>Alle Artikeln anzeigen</h1>
     <div class="container">
@@ -37,9 +39,11 @@
                   },
                 }"
               >
-                <a class="btn btn-primary">Bearbeiten</a>
+                <a class="btn btn-primary btn-all-products">Bearbeiten</a>
               </router-link>
-              <a @click="deleteProdukt(product, index)" class="btn btn-danger"
+              <a
+                @click="deleteProdukt(product, index)"
+                class="btn btn-danger btn-all-products"
                 >Löschen</a
               >
             </div>
@@ -132,3 +136,8 @@ export default {
   },
 };
 </script>
+<style>
+.btn-all-products {
+  margin: 1%;
+}
+</style>
