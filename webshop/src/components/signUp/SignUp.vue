@@ -27,17 +27,17 @@
         <input
           type="text"
           class="form-control single-line"
-          id="input-name"
+          id="input-vorname"
           placeholder="Max"
           v-model="signUpData.vorname"
         />
       </div>
-         <div class="form-group">
+      <div class="form-group">
         <label for="input-nachname">Nachname</label>
         <input
           type="text"
           class="form-control single-line"
-          id="input-name"
+          id="input-nachname"
           placeholder="Mustermann"
           v-model="signUpData.nachname"
         />
@@ -96,6 +96,7 @@ import { Path } from "@/constants/Path";
 import axios from "axios";
 import router from "@/router/index";
 import { Endpoint } from "@/constants/Endpoint";
+import firebase from "firebase";
 
 //TODO: Validation and Login
 
@@ -109,10 +110,19 @@ export default {
       street: "",
       number: "",
       plz: "",
-      city: ""
+      city: "",
     });
 
-    const adress = computed(() => signUpData.street + " " + signUpData.number + " " + signUpData.plz + " " + signUpData.city)
+    const adress = computed(
+      () =>
+        signUpData.street +
+        " " +
+        signUpData.number +
+        " " +
+        signUpData.plz +
+        " " +
+        signUpData.city
+    );
 
     async function send() {
       await axios
@@ -121,12 +131,21 @@ export default {
           nachname: signUpData.nachname,
           vorname: signUpData.vorname,
           telefonnummer: signUpData.number,
-          adresse: adress
+          adresse: adress,
         })
         //Handle responses
         .then((response) => {
           const status = response.status;
           if (status == 201) {
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(
+                signUpData.email,
+                signUpData.password
+              )
+              .then((cred) => {
+                console.log(cred);
+              });
             router.push(Path.HOME);
           }
         })
@@ -164,7 +183,7 @@ export default {
     return {
       signUpData,
       signUp,
-      login
+      login,
     };
   },
 };
