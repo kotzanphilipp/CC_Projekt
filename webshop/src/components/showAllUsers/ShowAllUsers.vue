@@ -46,7 +46,9 @@ export default {
     });
     async function fetchUsers() {
       await axios
-        .get("https://europe-west3-webshop-316612.cloudfunctions.net/users")
+        .get(
+          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo"
+        )
         .then(function(response) {
           nutzern.push(...response.data);
           console.log(nutzern);

@@ -4,47 +4,45 @@
       <button class="btn btn-warning">zurück</button>
     </router-link>
     <div class="container-center">
-      <div class="container-border">
-        <form id="addProduct-form" v-on:submit.prevent="addProduct_firebase">
-          <h3>Artikel hinzufügen</h3>
-          <label for="productName">Artikel Name:</label><br />
-          <input
-            type="text"
-            class="inputFields"
-            id="productName"
-            name="productName"
-            v-model="form.productName"
-            required
-          /><br /><br />
-          <label for="productPrice">Artikel Preis:</label><br />
-          <input
-            type="text"
-            class="inputFields"
-            id="productPrice"
-            name="productPrice"
-            v-model="form.productPrice"
-            required
-          /><br /><br />
-          <label for="productDescription">Artikel Beschreibung:</label><br />
-          <input
-            type="text"
-            class="inputFields"
-            id="productDescription"
-            name="productDescription"
-            v-model="form.productDescription"
-            required
-          /><br /><br />
-          <label for="productImage">Artikel Bild hochladen:</label><br />
-          <input
-            type="file"
-            class="inputFields"
-            id="productImage"
-            name="productImage"
-            required
-          /><br /><br />
-          <input type="submit" class="btn btn-success" value="hinzufügen" />
-        </form>
-      </div>
+      <form id="addProduct-form" v-on:submit.prevent="addProduct_firebase">
+        <h3>Artikel hinzufügen</h3>
+        <label for="productName">Artikel Name:</label><br />
+        <input
+          type="text"
+          class="inputFields"
+          id="productName"
+          name="productName"
+          v-model="form.productName"
+          required
+        /><br /><br />
+        <label for="productPrice">Artikel Preis:</label><br />
+        <input
+          type="text"
+          class="inputFields"
+          id="productPrice"
+          name="productPrice"
+          v-model="form.productPrice"
+          required
+        /><br /><br />
+        <label for="productDescription">Artikel Beschreibung:</label><br />
+        <input
+          type="text"
+          class="inputFields"
+          id="productDescription"
+          name="productDescription"
+          v-model="form.productDescription"
+          required
+        /><br /><br />
+        <label for="productImage">Artikel Bild hochladen:</label><br />
+        <input
+          type="file"
+          class="inputFields"
+          id="productImage"
+          name="productImage"
+          required
+        /><br /><br />
+        <input type="submit" class="btn btn-success" value="hinzufügen" />
+      </form>
     </div>
   </div>
 </template>
