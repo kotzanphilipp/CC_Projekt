@@ -12,6 +12,7 @@ import ShowAllProducts from "@/components/showAllProducts/ShowAllProducts.vue";
 import ShowAllUsers from "@/components/showAllUsers/ShowAllUsers.vue";
 import { Path } from "../constants/Path";
 import GoogleMap from "../components/googleMap/GoogleMap";
+import MakeAdmin from "@/components/makeAdmin/MakeAdmin.vue";
 
 const routes = [
   {
@@ -74,6 +75,11 @@ const routes = [
     name: "GoogleMap",
     component: GoogleMap,
   },
+  {
+    path: Path.MAKEADMIN,
+    name: "MakeAdmin",
+    component: MakeAdmin,
+  }
 ];
 
 const router = createRouter({

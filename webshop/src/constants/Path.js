@@ -11,4 +11,5 @@ export class Path {
   static SHOWALLPRODUCTS = "/showAllProducts";
   static SHOWALLUSERS = "/showAllUsers";
   static GOOGLEMAP = "/standort";
+  static MAKEADMIN = "/makeadmin"
 }
