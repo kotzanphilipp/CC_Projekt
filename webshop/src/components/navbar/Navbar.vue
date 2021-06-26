@@ -46,6 +46,12 @@
         </li>
 
         <li>
+          <router-link to="/orders" class="deco-none">
+            <a class="nav-link">Bestellungen</a>
+          </router-link>
+        </li>
+
+        <li>
           <LogoutButton />
         </li>
       </ul>

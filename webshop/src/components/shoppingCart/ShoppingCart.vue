@@ -105,6 +105,7 @@ export default {
           calcCartSum().then(function() {
             console.log("calculating sum...");
             console.log("sum is: " + sum.value);
+            console.log(cart);
           });
         })
         .catch(function(err) {

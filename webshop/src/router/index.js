@@ -10,6 +10,7 @@ import AddProduct from "@/components/addProduct/AddProduct.vue";
 import EditProduct from "@/components/editProduct/EditProduct.vue";
 import ShowAllProducts from "@/components/showAllProducts/ShowAllProducts.vue";
 import ShowAllUsers from "@/components/showAllUsers/ShowAllUsers.vue";
+import Orders from "@/components/orders/Orders.vue";
 import { Path } from "../constants/Path";
 import GoogleMap from "../components/googleMap/GoogleMap";
 import MakeAdmin from "@/components/makeAdmin/MakeAdmin.vue";
@@ -42,8 +43,8 @@ const routes = [
   },
   {
     path: Path.SHOPPINGCART,
-    name: 'ShoppingCart',
-    component: ShoppingCart
+    name: "ShoppingCart",
+    component: ShoppingCart,
   },
   {
     path: Path.ADMIN,
@@ -79,7 +80,12 @@ const routes = [
     path: Path.MAKEADMIN,
     name: "MakeAdmin",
     component: MakeAdmin,
-  }
+  },
+  {
+    path: Path.ORDERS,
+    name: "Orders",
+    component: Orders,
+  },
 ];
 
 const router = createRouter({
