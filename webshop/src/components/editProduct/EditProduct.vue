@@ -54,10 +54,14 @@
   </div>
 </template>
 <script>
+import useSession from "@/service/SessionStore";
+
 export default {
   name: "EditProduct",
   data() {
+    const { role } = useSession();
     return {
+      role,
       imageChangedBoolean: false,
       form: {
         productName: this.$route.params.name,
@@ -77,6 +81,7 @@ export default {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          'Role': this.role
         },
         body: JSON.stringify({
           produktName: this.form.productName,
@@ -85,7 +90,7 @@ export default {
           produktImage: this.$route.params.image,
         }),
       })
-        // .then((res) => console.log(res))
+        //then((res) => console.log(res))
         // .then(this.imageChanged())
         .then(console.log("The Product is Successfully Updated"))
         .catch((error) => console.log("Error", error));

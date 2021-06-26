@@ -1,10 +1,11 @@
 import { computed, reactive } from "vue";
+//import firebase from "firebase";
 
 const empty = "";
 
 const state = reactive({
   token: empty, //session token
-  role: empty, //role admin or customer
+  role: "ADMIN", //role admin or customer
   email: empty, //email of active user
   uid: empty, //authorization header
 });
