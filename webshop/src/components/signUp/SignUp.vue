@@ -23,13 +23,23 @@
         />
       </div>
       <div class="form-group">
-        <label for="input-name">Name</label>
+        <label for="input-vorname">Vorname</label>
         <input
           type="text"
           class="form-control single-line"
-          id="input-name"
+          id="input-vorname"
           placeholder="Max"
-          v-model="signUpData.name"
+          v-model="signUpData.vorname"
+        />
+      </div>
+      <div class="form-group">
+        <label for="input-nachname">Nachname</label>
+        <input
+          type="text"
+          class="form-control single-line"
+          id="input-nachname"
+          placeholder="Mustermann"
+          v-model="signUpData.nachname"
         />
       </div>
       <div class="form-group">
@@ -38,7 +48,7 @@
           type="text"
           class="form-control single-line"
           id="input-street"
-          placeholder="123@test.de"
+          placeholder="Muster Street"
           v-model="signUpData.street"
         />
       </div>
@@ -48,7 +58,7 @@
           type="text"
           class="form-control single-line"
           id="input-number"
-          placeholder="123@test.de"
+          placeholder="0173987987"
           v-model="signUpData.number"
         />
       </div>
@@ -58,7 +68,7 @@
           type="number"
           class="form-control single-line"
           id="input-plz"
-          placeholder="123@test.de"
+          placeholder="12345"
           v-model="signUpData.plz"
         />
       </div>
@@ -68,7 +78,7 @@
           type="text"
           class="form-control single-line"
           id="input-city"
-          placeholder="123@test.de"
+          placeholder="Wien"
           v-model="signUpData.city"
         />
       </div>
@@ -81,11 +91,12 @@
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { Path } from "@/constants/Path";
 import axios from "axios";
 import router from "@/router/index";
 import { Endpoint } from "@/constants/Endpoint";
+import firebase from "firebase";
 
 //TODO: Validation and Login
 
@@ -94,28 +105,50 @@ export default {
     const signUpData = reactive({
       email: "",
       password: "",
-      name: "",
+      nachname: "",
+      vorname: "",
       street: "",
       number: "",
       plz: "",
       city: "",
     });
 
+    const adress = computed(
+      () =>
+        signUpData.street +
+        " " +
+        signUpData.number +
+        " " +
+        signUpData.plz +
+        " " +
+        signUpData.city
+    );
+
     async function send() {
       await axios
-        .post(Endpoint.SIGNUP, {
-          email: signUpData.email,
-          password: signUpData.password,
-          name: signUpData.name,
-          street: signUpData.street,
-          number: signUpData.number,
-          plz: signUpData.plz,
-          city: signUpData.city,
-        })
+        .post(
+          Endpoint.SIGNUP + "/submit",
+          JSON.stringify({
+            email: signUpData.email,
+            nachname: signUpData.nachname,
+            vorname: signUpData.vorname,
+            telefonnummer: signUpData.number,
+            adresse: adress,
+          })
+        )
         //Handle responses
         .then((response) => {
           const status = response.status;
-          if (status == 200) {
+          if (status == 201) {
+            firebase
+              .auth()
+              .createUserWithEmailAndPassword(
+                signUpData.email,
+                signUpData.password
+              )
+              .then((cred) => {
+                console.log(cred);
+              });
             router.push(Path.HOME);
           }
         })

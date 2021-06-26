@@ -6,7 +6,7 @@
         <label for="email">Email</label>
         <input
           type="email"
-          v-model="email"
+          v-model="credentials.email"
           name="email"
           placeholder="hello@test.de"
         />
@@ -15,7 +15,7 @@
         <label for="password">Password</label>
         <input
           type="password"
-          v-model="password"
+          v-model="credentials.password"
           name="password"
           placeholder="***"
         />
@@ -33,11 +33,12 @@
 
 <script>
 import useSession from "@/service/SessionStore";
-import axios from "axios";
+//import axios from "axios";
 import router from "@/router/index";
 import { reactive } from "vue";
-import { Endpoint } from "@/constants/Endpoint";
+//import { Endpoint } from "@/constants/Endpoint";
 import { Path } from "@/constants/Path";
+import firebase from "firebase";
 
 export default {
   name: "Login",
@@ -55,6 +56,7 @@ export default {
     });
 
     async function login() {
+      /*
       await axios
         .post(Endpoint.LOGIN, credentials)
         .then((response) => {
@@ -64,19 +66,19 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            /*
+            
              * The request was made and the server responded with a
              * status code that falls out of the range of 2xx
-             */
+             
             responseMessage.message = "Login fehlgeschlagen";
             responseMessage.show = true;
             throw new Error(error);
           } else if (error.request) {
-            /*
+            
              * The request was made but no response was received, `error.request`
              * is an instance of XMLHttpRequest in the browser and an instance
              * of http.ClientRequest in Node.js
-             */
+             
             window.alert(error.request);
             throw new Error(error.request);
           } else {
@@ -84,6 +86,16 @@ export default {
             window.alert(error.message);
             throw new Error(error.message);
           }
+        }); */
+
+      const email = credentials.email.toString().trim();
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword(email, credentials.password)
+        .then((cred) => {
+          console.log(cred.user);
+          createSession(cred.user.getIdToken(), cred.user.email, cred.user.uid);
+          router.push(Path.HOME);
         });
     }
 

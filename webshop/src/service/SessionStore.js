@@ -6,14 +6,21 @@ const state = reactive({
   token: empty, //session token
   role: empty, //role admin or customer
   email: empty, //email of active user
-  header: empty, //authorization header
+  uid: empty, //authorization header
 });
 
-function createSession(inputToken, inputRole, inputEmail) {
+function createSession(inputToken, inputEmail, uid) {
   state.token = inputToken;
-  state.role = inputRole;
+  state.role = "TESTROLE";
   state.email = inputEmail;
-  state.header = "TESTHEADER";
+  state.uid = uid;
+}
+
+function resetSession() {
+  state.token = empty;
+  state.role = empty;
+  state.email = empty;
+  state.uid = empty;
 }
 
 export default function useSession() {
@@ -21,6 +28,7 @@ export default function useSession() {
     role: computed(() => state.role),
     email: computed(() => state.email),
     header: computed(() => state.header),
-    createSession
+    createSession,
+    resetSession,
   };
 }

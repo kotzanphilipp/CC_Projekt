@@ -45,13 +45,22 @@
           </router-link>
         </li>
 
+        <li>
+          <LogoutButton />
+        </li>
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
-export default {};
+import LogoutButton from "@/components/logoutButton/Logout.vue";
+export default {
+  name: "Navbar",
+  components: {
+    LogoutButton,
+  },
+};
 </script>
 
 <style></style>
