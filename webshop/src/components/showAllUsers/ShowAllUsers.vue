@@ -12,6 +12,7 @@
           <th>Nachname</th>
           <th>Telefonnummer</th>
           <th>Adresse</th>
+          <th>Email</th>
           <th></th>
         </tr>
       </thead>
@@ -22,6 +23,7 @@
           <td>{{ nutzer.nachname }}</td>
           <td>{{ nutzer.telefonnummer }}</td>
           <td>{{ nutzer.adresse }}</td>
+          <td>{{ nutzer.email }}</td>
           <td>
             <a @click="deleteNutzer(nutzer, index)" class="btn btn-danger">
               Löschen
@@ -46,7 +48,9 @@ export default {
     });
     async function fetchUsers() {
       await axios
-        .get("https://europe-west3-webshop-316612.cloudfunctions.net/users")
+        .get(
+          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo"
+        )
         .then(function(response) {
           nutzern.push(...response.data);
           console.log(nutzern);
