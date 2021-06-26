@@ -127,14 +127,13 @@ export default {
     async function send() {
       await axios
         .post(
-          Endpoint.SIGNUP + "/submit",
-          JSON.stringify({
+          Endpoint.SIGNUP + "/submit", {
             email: signUpData.email,
             nachname: signUpData.nachname,
             vorname: signUpData.vorname,
             telefonnummer: signUpData.number,
-            adresse: adress,
-          })
+            adresse: adress.value,
+          }
         )
         //Handle responses
         .then((response) => {
