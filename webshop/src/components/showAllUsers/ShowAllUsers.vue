@@ -8,9 +8,10 @@
       <thead>
         <tr>
           <th></th>
-          <th>vorname</th>
-          <th>nachname</th>
-          <th>telefonnummer</th>
+          <th>Vorname</th>
+          <th>Nachname</th>
+          <th>Telefonnummer</th>
+          <th>Adresse</th>
           <th></th>
         </tr>
       </thead>
@@ -20,6 +21,7 @@
           <td>{{ nutzer.vorname }}</td>
           <td>{{ nutzer.nachname }}</td>
           <td>{{ nutzer.telefonnummer }}</td>
+          <td>{{ nutzer.adresse }}</td>
           <td>
             <a @click="deleteNutzer(nutzer, index)" class="btn btn-danger">
               Löschen
