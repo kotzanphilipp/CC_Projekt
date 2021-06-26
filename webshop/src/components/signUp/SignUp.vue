@@ -1,92 +1,105 @@
 <template>
   <div class="signup">
-    <h1>SignUp</h1>
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label for="input-email">Email</label>
-        <input
-          type="email"
-          class="form-control single-line"
-          id="input-email"
-          placeholder="123@test.de"
-          v-model="signUpData.email"
-        />
-      </div>
-      <div class="form-group">
-        <label for="input-password">Password</label>
-        <input
-          type="password"
-          class="form-control single-line"
-          id="input-password"
-          placeholder="***"
-          v-model="signUpData.password"
-        />
-      </div>
-      <div class="form-group">
-        <label for="input-vorname">Vorname</label>
-        <input
-          type="text"
-          class="form-control single-line"
-          id="input-vorname"
-          placeholder="Max"
-          v-model="signUpData.vorname"
-        />
-      </div>
-      <div class="form-group">
-        <label for="input-nachname">Nachname</label>
-        <input
-          type="text"
-          class="form-control single-line"
-          id="input-nachname"
-          placeholder="Mustermann"
-          v-model="signUpData.nachname"
-        />
-      </div>
-      <div class="form-group">
-        <label for="input-street">Street</label>
-        <input
-          type="text"
-          class="form-control single-line"
-          id="input-street"
-          placeholder="Muster Street"
-          v-model="signUpData.street"
-        />
-      </div>
-      <div class="form-group">
-        <label for="input-number">number</label>
-        <input
-          type="text"
-          class="form-control single-line"
-          id="input-number"
-          placeholder="0173987987"
-          v-model="signUpData.number"
-        />
-      </div>
-      <div class="form-group">
-        <label for="input-plz">PLZ</label>
-        <input
-          type="number"
-          class="form-control single-line"
-          id="input-plz"
-          placeholder="12345"
-          v-model="signUpData.plz"
-        />
-      </div>
-      <div class="form-group">
-        <label for="input-city">City</label>
-        <input
-          type="text"
-          class="form-control single-line"
-          id="input-city"
-          placeholder="Wien"
-          v-model="signUpData.city"
-        />
-      </div>
-      <div class="bottom-buttons-container">
-        <button class="btn btn-primary" @click="signUp">Register</button>
-        <button class="btn btn-secondary" @click="login">To Login</button>
-      </div>
-    </form>
+    <div class="container-center">
+      <form @submit.prevent="handleSubmit">
+        <h3>SignUp</h3>
+        <div class="form-group-signup" style="display: table">
+          <div style="display: table-cell">
+            <label for="input-vorname">Vorname</label>
+            <input
+              type="text"
+              class="form-control single-line"
+              id="input-vorname"
+              placeholder="Max"
+              size="30"
+              v-model="signUpData.vorname"
+            />
+          </div>
+          <div style="display: table-cell">
+            <label for="input-nachname">Nachname</label>
+            <input
+              type="text"
+              class="form-control single-line"
+              id="input-nachname"
+              placeholder="Mustermann"
+              size="30"
+              v-model="signUpData.nachname"
+            />
+          </div>
+        </div>
+        <div class="form-group-signup" style="display: table">
+          <div style="display: table-cell">
+            <label for="input-street">Straße und Hausnummer</label>
+            <input
+              type="text"
+              class="form-control single-line"
+              id="input-street"
+              placeholder="Muster Street"
+              size="40"
+              v-model="signUpData.street"
+            />
+          </div>
+          <div style="display: table-cell">
+            <label for="input-plz">PLZ</label>
+            <input
+              type="number"
+              class="form-control"
+              id="input-plz"
+              placeholder="12345"
+              v-model="signUpData.plz"
+            />
+          </div>
+        </div>
+        <div class="form-group-signup">
+          <label for="input-city">Stadt</label>
+          <input
+            type="text"
+            class="form-control"
+            id="input-city"
+            placeholder="Wien"
+            v-model="signUpData.city"
+          />
+        </div>
+        <div class="form-group-signup">
+          <label for="input-number">Telefonnnummer</label>
+          <input
+            type="number"
+            class="form-control single-line"
+            id="input-number"
+            placeholder="0173987987"
+            v-model="signUpData.number"
+          />
+        </div>
+        <div class="form-group-signup" style="display: table">
+          <div style="display: table-cell">
+            <label for="input-email">Email</label>
+            <input
+              type="email"
+              class="form-control single-line"
+              id="input-email"
+              size="30"
+              placeholder="123@test.de"
+              v-model="signUpData.email"
+            />
+          </div>
+          <div style="display: table-cell">
+            <label for="input-password">Passwort</label>
+            <input
+              type="password"
+              class="form-control single-line"
+              id="input-password"
+              placeholder="***"
+              size="30"
+              v-model="signUpData.password"
+            />
+          </div>
+        </div>
+        <div class="bottom-buttons-container">
+          <button class="btn btn-primary" @click="signUp">Register</button>
+          <button class="btn btn-secondary" @click="login">To Login</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -114,27 +127,18 @@ export default {
     });
 
     const adress = computed(
-      () =>
-        signUpData.street +
-        " " +
-        signUpData.number +
-        " " +
-        signUpData.plz +
-        " " +
-        signUpData.city
+      () => signUpData.street + " " + signUpData.plz + " " + signUpData.city
     );
 
     async function send() {
       await axios
-        .post(
-          Endpoint.SIGNUP + "/submit", {
-            email: signUpData.email,
-            nachname: signUpData.nachname,
-            vorname: signUpData.vorname,
-            telefonnummer: signUpData.number,
-            adresse: adress.value,
-          }
-        )
+        .post(Endpoint.SIGNUP + "/submit", {
+          email: signUpData.email,
+          nachname: signUpData.nachname,
+          vorname: signUpData.vorname,
+          telefonnummer: signUpData.number,
+          adresse: adress.value,
+        })
         //Handle responses
         .then((response) => {
           const status = response.status;
@@ -190,3 +194,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.form-group-signup {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+</style>
