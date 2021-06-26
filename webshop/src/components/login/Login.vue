@@ -1,33 +1,41 @@
 <template>
   <div class="login">
-    <h1>Login</h1>
-    <form @submit.prevent="handleSubmit">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          v-model="credentials.email"
-          name="email"
-          placeholder="hello@test.de"
-        />
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          v-model="credentials.password"
-          name="password"
-          placeholder="***"
-        />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" @click="login">Login</button>
-        <button class="btn btn-secondary" @click="signUp">SignUp</button>
-      </div>
-      <small class="text-regular red smaller" v-show="responseMessage.show">{{
-        responseMessage.message
-      }}</small>
-    </form>
+    <div class="container-center">
+      <form @submit.prevent="handleSubmit">
+        <h3>Login</h3>
+        <div class="form-group-signin">
+          <label for="email">Email</label>
+          <br />
+          <input
+            type="email"
+            v-model="credentials.email"
+            name="email"
+            placeholder="hello@test.de"
+            size="30"
+          />
+          <br />
+        </div>
+        <div class="form-group-signin">
+          <label for="password">Passwort</label>
+          <br />
+          <input
+            type="password"
+            v-model="credentials.password"
+            name="password"
+            placeholder="***"
+            size="30"
+          />
+          <br />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" @click="login">Login</button>
+          <button class="btn btn-secondary" @click="signUp">SignUp</button>
+        </div>
+        <small class="text-regular red smaller" v-show="responseMessage.show">{{
+          responseMessage.message
+        }}</small>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -112,3 +120,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.form-group-signin {
+  text-align: left;
+  margin-top: 8%;
+  margin-bottom: 8%;
+}
+</style>
