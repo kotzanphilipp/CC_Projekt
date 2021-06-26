@@ -29,6 +29,6 @@ export default function useSession() {
     email: computed(() => state.email),
     header: computed(() => state.header),
     createSession,
-    resetSession
+    resetSession,
   };
 }

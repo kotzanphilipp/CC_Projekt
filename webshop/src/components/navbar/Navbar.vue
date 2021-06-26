@@ -48,19 +48,18 @@
         <li>
           <LogoutButton />
         </li>
-
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
-import LogoutButton from "@/components/logoutButton/Logout.vue"
+import LogoutButton from "@/components/logoutButton/Logout.vue";
 export default {
   name: "Navbar",
   components: {
-    LogoutButton
-  }
+    LogoutButton,
+  },
 };
 </script>
 

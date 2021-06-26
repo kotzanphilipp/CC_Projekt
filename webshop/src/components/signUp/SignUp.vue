@@ -126,13 +126,16 @@ export default {
 
     async function send() {
       await axios
-        .post(Endpoint.SIGNUP + "/submit", {
-          email: signUpData.email,
-          nachname: signUpData.nachname,
-          vorname: signUpData.vorname,
-          telefonnummer: signUpData.number,
-          adresse: adress,
-        })
+        .post(
+          Endpoint.SIGNUP + "/submit",
+          JSON.stringify({
+            email: signUpData.email,
+            nachname: signUpData.nachname,
+            vorname: signUpData.vorname,
+            telefonnummer: signUpData.number,
+            adresse: adress,
+          })
+        )
         //Handle responses
         .then((response) => {
           const status = response.status;

@@ -6,7 +6,7 @@
 
 <script>
 import firebase from "firebase";
-import useSession from "@/service/SessionStore"
+import useSession from "@/service/SessionStore";
 
 export default {
   name: "LogoutButton",
