@@ -8,7 +8,7 @@
             <label for="input-vorname">Vorname</label>
             <input
               type="text"
-              class="form-control single-line"
+              class="form-control"
               id="input-vorname"
               placeholder="Max"
               size="30"
@@ -19,7 +19,7 @@
             <label for="input-nachname">Nachname</label>
             <input
               type="text"
-              class="form-control single-line"
+              class="form-control"
               id="input-nachname"
               placeholder="Mustermann"
               size="30"
@@ -32,7 +32,7 @@
             <label for="input-street">Straße und Hausnummer</label>
             <input
               type="text"
-              class="form-control single-line"
+              class="form-control"
               id="input-street"
               placeholder="Muster Street"
               size="40"
@@ -50,32 +50,35 @@
             />
           </div>
         </div>
-        <div class="form-group-signup">
-          <label for="input-city">Stadt</label>
-          <input
-            type="text"
-            class="form-control"
-            id="input-city"
-            placeholder="Wien"
-            v-model="signUpData.city"
-          />
-        </div>
-        <div class="form-group-signup">
-          <label for="input-number">Telefonnnummer</label>
-          <input
-            type="number"
-            class="form-control single-line"
-            id="input-number"
-            placeholder="0173987987"
-            v-model="signUpData.number"
-          />
+        <div class="form-group-signup" style="display: table">
+          <div style="display: table-cell">
+            <label for="input-city">Stadt</label>
+            <input
+              type="text"
+              class="form-control"
+              id="input-city"
+              placeholder="Wien"
+              size="40"
+              v-model="signUpData.city"
+            />
+          </div>
+          <div style="display: table-cell">
+            <label for="input-number">Telefonnnummer</label>
+            <input
+              type="number"
+              class="form-control"
+              id="input-number"
+              placeholder="0173987987"
+              v-model="signUpData.number"
+            />
+          </div>
         </div>
         <div class="form-group-signup" style="display: table">
           <div style="display: table-cell">
             <label for="input-email">Email</label>
             <input
               type="email"
-              class="form-control single-line"
+              class="form-control"
               id="input-email"
               size="30"
               placeholder="123@test.de"
@@ -86,7 +89,7 @@
             <label for="input-password">Passwort</label>
             <input
               type="password"
-              class="form-control single-line"
+              class="form-control"
               id="input-password"
               placeholder="***"
               size="30"

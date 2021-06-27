@@ -20,7 +20,7 @@
             <a class="nav-link">Artikelübersicht</a>
           </router-link>
         </li>
-
+        <!-- v-if="uid != empty" -->
         <li class="nav-item">
           <router-link to="/user" class="deco-none">
             <a class="nav-link">Konto</a>

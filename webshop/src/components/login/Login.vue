@@ -5,27 +5,25 @@
         <h3>Login</h3>
         <div class="form-group-signin">
           <label for="email">Email</label>
-          <br />
           <input
             type="email"
+            class="form-control"
             v-model="credentials.email"
             name="email"
             placeholder="hello@test.de"
             size="30"
           />
-          <br />
         </div>
         <div class="form-group-signin">
           <label for="password">Passwort</label>
-          <br />
           <input
             type="password"
+            class="form-control"
             v-model="credentials.password"
             name="password"
             placeholder="***"
             size="30"
           />
-          <br />
         </div>
         <div class="form-group">
           <button class="btn btn-primary" @click="login">Login</button>
