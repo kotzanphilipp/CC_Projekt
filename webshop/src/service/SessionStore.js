@@ -17,6 +17,18 @@ function createSession(inputToken, inputEmail, uid) {
   state.uid = uid;
 }
 
+function setEmail(inputEmail) {
+  state.email = inputEmail;
+}
+
+function setToken(inputToken) {
+  state.token = inputToken;
+}
+
+function setId(inputId) {
+  state.uid = inputId;
+}
+
 function resetSession() {
   state.token = empty;
   state.role = empty;
@@ -30,7 +42,11 @@ export default function useSession() {
     email: computed(() => state.email),
     header: computed(() => state.header),
     uid: computed(() => state.uid),
+    token: computed(() => state.token),
     createSession,
     resetSession,
+    setId,
+    setEmail,
+    setToken
   };
 }

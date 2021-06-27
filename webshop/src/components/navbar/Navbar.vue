@@ -51,6 +51,12 @@
           </router-link>
         </li>
 
+         <li>
+          <router-link to="/admin" class="deco-none">
+            <a class="nav-link">Admin</a>
+          </router-link>
+        </li>
+
         <li>
           <LogoutButton />
         </li>

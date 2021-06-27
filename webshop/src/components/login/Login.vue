@@ -49,7 +49,7 @@ import firebase from "firebase";
 export default {
   name: "Login",
   setup() {
-    const { createSession } = useSession();
+    const { setEmail, setId, setToken, email } = useSession();
 
     const credentials = reactive({
       email: "",
@@ -72,19 +72,19 @@ export default {
         })
         .catch((error) => {
           if (error.response) {
-            
+
              * The request was made and the server responded with a
              * status code that falls out of the range of 2xx
-             
+
             responseMessage.message = "Login fehlgeschlagen";
             responseMessage.show = true;
             throw new Error(error);
           } else if (error.request) {
-            
+
              * The request was made but no response was received, `error.request`
              * is an instance of XMLHttpRequest in the browser and an instance
              * of http.ClientRequest in Node.js
-             
+
             window.alert(error.request);
             throw new Error(error.request);
           } else {
@@ -95,14 +95,17 @@ export default {
         }); */
 
       const email = credentials.email.toString().trim();
-      await firebase
+      firebase
         .auth()
         .signInWithEmailAndPassword(email, credentials.password)
         .then((cred) => {
-          console.log(cred.user);
-          createSession(cred.user.getIdToken(), cred.user.email, cred.user.uid);
+          setEmail(cred.user.email)
+          setId(cred.user.id)
+          return cred.user.getIdToken()})
+        .then(idToken => {
+          setToken(idToken);
           router.push(Path.HOME);
-        });
+        })
     }
 
     function signUp() {
@@ -110,10 +113,11 @@ export default {
     }
 
     return {
+      email,
       credentials,
       responseMessage,
       login,
-      signUp,
+      signUp
     };
   },
 };
