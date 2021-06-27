@@ -29,6 +29,7 @@ export default function useSession() {
     role: computed(() => state.role),
     email: computed(() => state.email),
     header: computed(() => state.header),
+    uid: computed(() => state.uid),
     createSession,
     resetSession,
   };

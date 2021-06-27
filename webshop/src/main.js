@@ -13,10 +13,10 @@ const firebaseConfig = {
   storageBucket: "webshop-316612.appspot.com",
   messagingSenderId: "977876332823",
   appId: "1:977876332823:web:d762dcc8d36fc57b280752",
-  measurementId: "G-F78VMV0EP7"
+  measurementId: "G-F78VMV0EP7",
 };
 
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig);
 
 const app = createApp(App);
 app.use(router);
