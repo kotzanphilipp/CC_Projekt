@@ -78,9 +78,9 @@
                   >
                 </li>
               </ul>
-              <button type="button" class="btn btn-primary btn-block">
-                Jetzt kaufen
-              </button>
+              <a @click="bestellungAbgesendet(nutzer, index)" class="btn btn-danger">
+              Jetzt Kaufen
+              </a>
             </div>
           </div>
         </div>
@@ -91,6 +91,11 @@
 
 <script>
 import { onMounted, reactive, ref } from "vue";
+import useSession from "@/service/SessionStore";
+import axios from "axios";
+import { Path } from "@/constants/Path";
+import router from "@/router/index";
+
 
 export default {
   name: "ShoppingCart",
@@ -98,6 +103,8 @@ export default {
     let cart = reactive([]);
     let sum = ref(0);
     let sumWithTax = ref(0);
+    let produktNames = ref("");
+    const {email} = useSession();
 
     onMounted(() => {
       readLocalStorageCart()
@@ -105,9 +112,8 @@ export default {
           calcCartSum().then(function() {
             console.log("calculating sum...");
             console.log("sum is: " + sum.value);
-            console.log(cart);
           });
-        })
+        }).then(addProductNames())
         .catch(function(err) {
           console.log(err);
         });
@@ -124,10 +130,32 @@ export default {
       sumWithTax.value = 1.19 * sum.value;
     }
 
+    async function addProductNames(){
+      cart.forEach(function(item){
+        produktNames.value += item.produktName;
+      })
+    }
+
+    async function bestellungAbgesendet(){
+        await axios
+        .post("https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",{
+            bestellNr: 5,
+            email: email,
+            gesamt: sumWithTax.value,
+            produkt: produktNames.value
+        }
+        ).then(function(){
+          router.push(Path.ADDORDER);
+        })
+
+        }    
+
     return {
       cart,
       sum,
       sumWithTax,
+      bestellungAbgesendet,
+      addProductNames
     };
   },
 };

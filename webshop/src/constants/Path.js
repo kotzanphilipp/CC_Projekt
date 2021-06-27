@@ -13,4 +13,5 @@ export class Path {
   static GOOGLEMAP = "/standort";
   static MAKEADMIN = "/makeadmin";
   static ORDERS = "/orders";
+  static ADDORDER = "/addOrder"
 }

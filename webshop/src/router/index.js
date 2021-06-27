@@ -11,6 +11,7 @@ import EditProduct from "@/components/editProduct/EditProduct.vue";
 import ShowAllProducts from "@/components/showAllProducts/ShowAllProducts.vue";
 import ShowAllUsers from "@/components/showAllUsers/ShowAllUsers.vue";
 import Orders from "@/components/orders/Orders.vue";
+import AddOrder from "@/components/addOrder/AddOrder.vue";
 import { Path } from "../constants/Path";
 import GoogleMap from "../components/googleMap/GoogleMap";
 import MakeAdmin from "@/components/makeAdmin/MakeAdmin.vue";
@@ -87,6 +88,11 @@ const routes = [
     path: Path.MAKEADMIN,
     name: "MakeAdmin",
     component: MakeAdmin,
+  },
+  {
+    path: Path.ADDORDER,
+    name: "AddOrder",
+    component: AddOrder,
   },
   {
     path: Path.ORDERS,
