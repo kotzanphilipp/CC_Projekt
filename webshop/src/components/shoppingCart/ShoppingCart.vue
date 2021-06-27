@@ -103,13 +103,14 @@ export default {
     let cart = reactive([]);
     let sum = ref(0);
     let sumWithTax = ref(0);
+    let uniqID = ref(0);
     let produktNames = ref("");
     const {email} = useSession();
 
     onMounted(() => {
       readLocalStorageCart()
         .then(function() {
-          calcCartSum().then(function() {
+          calcCartSum().then(getUniqID()).then(function() {
             console.log("calculating sum...");
             console.log("sum is: " + sum.value);
           });
@@ -130,6 +131,10 @@ export default {
       sumWithTax.value = 1.19 * sum.value;
     }
 
+    async function getUniqID(){
+      uniqID = Math.round(+new Date()/1000);
+    }
+
     async function addProductNames(){
       cart.forEach(function(item){
         produktNames.value += item.produktName;
@@ -139,7 +144,7 @@ export default {
     async function bestellungAbgesendet(){
         await axios
         .post("https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",{
-            bestellNr: 5,
+            bestellNr: uniqID,
             email: email,
             gesamt: sumWithTax.value,
             produkt: produktNames.value

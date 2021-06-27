@@ -18,6 +18,7 @@ export default {
       readLocalStorageCart()
       console.log(cart);
       /*fetchUsers();*/
+      emptyCart();
     });
     /*function fetchUsers() {
         //TODO
@@ -25,8 +26,13 @@ export default {
     async function readLocalStorageCart() {
       cart.push(...JSON.parse(localStorage["cart"]));
     }
- 
 
+   async function emptyCart(){
+      localStorage.removeItem('cart');
+    }
+  return {
+    readLocalStorageCart,
+  };
   },
 };
 </script>
