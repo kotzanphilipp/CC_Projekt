@@ -57,10 +57,8 @@ import useSession from "@/service/SessionStore";
 export default {
   name: "EditProduct",
   data() {
-    const { token, email, role } = useSession();
+    const { token } = useSession();
     return {
-      role,
-      email,
       token,
       imageChangedBoolean: false,
       form: {
@@ -76,20 +74,18 @@ export default {
         "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
 
       //var imageName = document.getElementById("productImage").value;
-      console.log("Role is: " + this.role)
-      console.log("Token is: " + this.token)
-      console.log("Email: " + this.email)
+      console.log("Token is: " + this.token);
       await fetch(cloudfunctions_produkts_API_URL + ID, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           produktName: this.form.productName,
           produktPreis: this.form.productPrice,
           produktBeschreibung: this.form.productDescription,
           produktImage: this.$route.params.image,
-          token: this.token
+          token: this.token,
         }),
       })
         //then((res) => console.log(res))

@@ -55,31 +55,33 @@
 </template>
 
 <script>
+import useSession from "@/service/SessionStore";
+import { reactive } from "vue";
 import axios from "axios";
-import { onBeforeMount, reactive } from "vue";
 
 export default {
-  name: "ShowAllProducts",
-
-  setup() {
+  name: "AddProduct",
+  data() {
+    const { token } = useSession();
     let products = reactive([]);
-
     const cloudfunctions_produkts_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
     const cloudfunctions_imageService_GET_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/getURL?product=";
     const cloudfunctions_imageService_DELETE_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/delete?product=";
-
-    onBeforeMount(() => {
-      fetchProducts().then(function() {
-        fetchProductsURL();
-      });
-    });
-
-    async function fetchProducts() {
+    return {
+      token,
+      products,
+      cloudfunctions_produkts_API_URL,
+      cloudfunctions_imageService_GET_API_URL,
+      cloudfunctions_imageService_DELETE_API_URL,
+    };
+  },
+  methods: {
+    async fetchProducts(products) {
       await axios
-        .get(cloudfunctions_produkts_API_URL)
+        .get(this.cloudfunctions_produkts_API_URL)
         .then(function(response) {
           products.push(...response.data);
           console.log(products);
@@ -87,12 +89,14 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-    }
+    },
 
-    async function fetchProductsURL() {
+    async fetchProductsURL(products) {
       products.forEach((product) => {
         axios
-          .get(cloudfunctions_imageService_GET_API_URL + product.produktImage)
+          .get(
+            this.cloudfunctions_imageService_GET_API_URL + product.produktImage
+          )
           .then(function(response) {
             product.produktImageURL = response.data;
           })
@@ -100,24 +104,28 @@ export default {
             console.log(error);
           });
       });
-    }
+    },
 
-    async function deleteProdukt(product, index) {
+    async deleteProdukt(product, index) {
       console.log("product_ID: " + product.id);
-      axios
-        .delete(cloudfunctions_produkts_API_URL + product.id)
+      console.log("token is:", this.token);
+      await fetch(this.cloudfunctions_produkts_API_URL + product.id, {
+        mode: "cors",
+        method: "DELETE",
+        headers: { token: this.token },
+      })
         .then(function() {
-          deleteProduktImage(product);
+          //deleteProduktImage(product);
           // Delete The Product From the Array
-          products.splice(index, 1);
+          this.products.splice(index, 1);
           console.log("Product is Deleted Successfully");
         })
         .catch(function(error) {
           console.log(error);
         });
-    }
+    },
 
-    async function deleteProduktImage(product) {
+    /*async deleteProduktImage(product) {
       axios
         .get(cloudfunctions_imageService_DELETE_API_URL + product.produktImage)
         .then(function() {
@@ -126,16 +134,15 @@ export default {
         .catch(function(error) {
           console.log(error);
         });
-    }
-
-    return {
-      products,
-      deleteProduktImage,
-      deleteProdukt,
-    };
+    }*/
+  },
+  beforeMount() {
+    this.fetchProducts(this.products);
+    this.fetchProductsURL(this.products);
   },
 };
 </script>
+
 <style>
 .btn-all-products {
   margin: 1%;
