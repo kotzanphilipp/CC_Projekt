@@ -47,11 +47,14 @@
   </div>
 </template>
 <script>
+import useSession from "@/service/SessionStore";
+
 export default {
   name: "AddProduct",
-
   data() {
+    const { token } = useSession();
     return {
+      token,
       form: {
         productName: "",
         productPrice: "",
@@ -76,6 +79,7 @@ export default {
           produktPreis: this.form.productPrice + " $",
           produktBeschreibung: this.form.productDescription,
           produktImage: imageName.split(/(\\|\/)/g).pop(),
+          token: this.token,
         }),
       })
         .then(this.addProductImage_storage())
@@ -96,6 +100,7 @@ export default {
 
       await fetch(cloudfunctions_imageService_API_URL, {
         method: "POST",
+        headers: { token: this.token },
         body: formData,
       })
         //.then((response) => console.log(response))

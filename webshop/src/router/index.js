@@ -15,6 +15,7 @@ import AddOrder from "@/components/addOrder/AddOrder.vue";
 import { Path } from "../constants/Path";
 import GoogleMap from "../components/googleMap/GoogleMap";
 import MakeAdmin from "@/components/makeAdmin/MakeAdmin.vue";
+import useSession from "@/service/SessionStore";
 
 // import { useRouter, useRoute } from "vue-router";
 import firebase from "firebase";
@@ -111,12 +112,17 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const isAuthenticated = firebase.auth().currentUser;
   const loggedIn = to.matched.some((record) => record.meta.loggedIn);
+  const { email } = useSession();
 
   console.log("isauthenticated", isAuthenticated);
+  console.log(email.value);
+  console.log(email.value != "");
+
   if (requiresAuth && !isAuthenticated) {
     next("/login");
     /* if the User already Loggedin */
   } else if (loggedIn && isAuthenticated) {
+    // } else if (loggedIn && /*isAuthenticated*/!email.value == " ") {
     next("/overview");
     // TODO => isAuthenticated bzw. firebase.auth().currentUser; sollte im lokal storage gespeichert werden, denn wenn man
     // in der URL z.B. /login eingibt, dann wird man im login seite landen obwohl man schon eingeloggt ist,

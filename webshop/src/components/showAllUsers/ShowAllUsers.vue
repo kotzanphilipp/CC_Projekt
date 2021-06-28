@@ -38,19 +38,25 @@
 <script>
 import axios from "axios";
 import { onBeforeMount, reactive } from "vue";
+import useSession from "@/service/SessionStore";
 
 export default {
   name: "ShowAllUsers",
   setup() {
     let nutzern = reactive([]);
+    const { token } = useSession();
     onBeforeMount(() => {
       fetchUsers();
     });
     async function fetchUsers() {
-      await axios
-        .get(
-          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo"
-        )
+      await axios({
+        method: "GET",
+        url:
+          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo/getAllUsers",
+        headers: {
+          token: token.value,
+        },
+      })
         .then(function(response) {
           nutzern.push(...response.data);
           console.log(nutzern);
@@ -74,7 +80,7 @@ export default {
           console.log(error);
         });
     }
-    return { nutzern, deleteNutzer };
+    return { nutzern, deleteNutzer, token };
   },
 };
 </script>
