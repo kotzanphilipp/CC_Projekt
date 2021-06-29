@@ -47,11 +47,13 @@
   </div>
 </template>
 <script>
+import useSession from "@/service/SessionStore";
 export default {
   name: "AddProduct",
-
   data() {
+    const { token } = useSession();
     return {
+      token,
       form: {
         productName: "",
         productPrice: "",
@@ -63,13 +65,12 @@ export default {
     async addProduct_firebase() {
       const cloudfunctions_produkts_API_URL =
         "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
-
       var imageName = document.getElementById("productImage").value;
-
       await fetch(cloudfunctions_produkts_API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          token: this.token,
         },
         body: JSON.stringify({
           produktName: this.form.productName,
@@ -81,21 +82,18 @@ export default {
         .then(this.addProductImage_storage())
         .then(console.log("The Product is Successfully Created"))
         .catch((error) => console.log("Error", error));
-
       // Empty The Input Fields after Submit
       document.forms["addProduct-form"].reset();
     },
-
     async addProductImage_storage() {
       const cloudfunctions_imageService_API_URL =
         "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/upload2";
-
       const imageName = document.getElementById("productImage");
       const formData = new FormData();
       formData.append("file", imageName.files[0]);
-
       await fetch(cloudfunctions_imageService_API_URL, {
         method: "POST",
+        headers: { token: this.token },
         body: formData,
       })
         //.then((response) => console.log(response))
