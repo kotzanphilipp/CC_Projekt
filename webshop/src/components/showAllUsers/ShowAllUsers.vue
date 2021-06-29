@@ -38,27 +38,38 @@
 <script>
 import axios from "axios";
 import { onBeforeMount, reactive } from "vue";
+import useSession from "@/service/SessionStore";
 
 export default {
   name: "ShowAllUsers",
   setup() {
+    const { token } = useSession();
     let nutzern = reactive([]);
     onBeforeMount(() => {
       fetchUsers();
     });
+
     async function fetchUsers() {
-      await axios
-        .get(
-          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo"
-        )
+      console.log(token.value);
+      await fetch(
+        "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo/getAllUsers",
+        {
+          method: "GET",
+          headers: { token: token.value },
+        }
+      )
         .then(function(response) {
-          nutzern.push(...response.data);
-          console.log(nutzern);
+          return response.json();
+        })
+        .then(function(data) {
+          console.log(data);
+          nutzern.push(...data);
         })
         .catch(function(error) {
           console.log(error);
         });
     }
+
     async function deleteNutzer(nutzer, index) {
       console.log("nutzer_Email: " + nutzer.email);
       axios
