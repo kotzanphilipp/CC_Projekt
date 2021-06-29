@@ -73,7 +73,7 @@ export default {
         .then(idToken => {
           setToken(idToken);
           checkAdminRole();
-          //router.push(Path.HOME);
+          router.push(Path.HOME);
         })
         
     }
