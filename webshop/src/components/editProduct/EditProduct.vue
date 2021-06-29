@@ -79,13 +79,13 @@ export default {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          token: this.token,
         },
         body: JSON.stringify({
           produktName: this.form.productName,
           produktPreis: this.form.productPrice,
           produktBeschreibung: this.form.productDescription,
           produktImage: this.$route.params.image,
-          token: this.token,
         }),
       })
         //then((res) => console.log(res))

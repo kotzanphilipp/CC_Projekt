@@ -73,13 +73,13 @@ export default {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          token: this.token,
         },
         body: JSON.stringify({
           produktName: this.form.productName,
           produktPreis: this.form.productPrice + " $",
           produktBeschreibung: this.form.productDescription,
           produktImage: imageName.split(/(\\|\/)/g).pop(),
-          token: this.token,
         }),
       })
         .then(this.addProductImage_storage())
