@@ -49,17 +49,21 @@ export default {
       fetchUsers();
     });
     async function fetchUsers() {
-      await axios({
-        method: "GET",
-        url:
-          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo/getAllUsers",
-        headers: {
-          token: token.value,
-        },
-      })
+      console.log(token.value);
+      await fetch(
+        "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo2/" +
+          token.value,
+        {
+          method: "GET",
+          // headers: { token: token.value },
+        }
+      )
         .then(function(response) {
-          nutzern.push(...response.data);
-          console.log(nutzern);
+          return response.json();
+        })
+        .then(function(data) {
+          console.log(data);
+          nutzern.push(...data);
         })
         .catch(function(error) {
           console.log(error);

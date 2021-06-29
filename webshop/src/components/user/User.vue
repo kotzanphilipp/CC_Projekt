@@ -111,16 +111,18 @@ export default {
         });
     }
     function profilBearbeiten() {
-      // document.querySelectorAll(".form-control").forEach((element) => {
-      //   element.setAttribute("disabled", "false");
-      // });
       let input = document.querySelectorAll(".form-control");
-      // input.disabled = false;
       input.forEach((element) => {
         element.disabled = false;
       });
     }
-    return { profilBearbeiten };
+    function speichern() {
+      let input = document.querySelectorAll(".form-control");
+      input.forEach((element) => {
+        element.disabled = true;
+      });
+    }
+    return { profilBearbeiten, speichern };
   },
 };
 </script>
