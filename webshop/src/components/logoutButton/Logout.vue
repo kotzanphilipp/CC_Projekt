@@ -23,6 +23,7 @@ export default {
         .signOut()
         .then(() => {
           console.log("logged out");
+          resetSession();
           router.push(Path.LOGIN);
         });
     }
@@ -30,7 +31,6 @@ export default {
     function handleClick() {
       console.log("uid:" + uid.value);
       logout();
-      resetSession();
       console.log("uid:" + uid.value);
     }
 
