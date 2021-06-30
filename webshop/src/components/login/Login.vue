@@ -73,20 +73,18 @@ export default {
         .then(idToken => {
           setToken(idToken);
           checkAdminRole();
-          router.push(Path.HOME);
         })
-        
     }
 
     async function checkAdminRole() {
       const isAdmin = firebase.functions().httpsCallable("checkAdminRole");
-      isAdmin({ test: "test" }).then((result) => {
+      isAdmin().then((result) => {
         if(result.data) {
           setRole("ADMIN");
         }
         console.log("ROLE: ", role.value)
+        router.push(Path.HOME);
       })
-
     }
 
     function signUp() {
