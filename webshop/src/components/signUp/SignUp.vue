@@ -113,11 +113,13 @@ import axios from "axios";
 import router from "@/router/index";
 import { Endpoint } from "@/constants/Endpoint";
 import firebase from "firebase";
+import useSession from "@/service/SessionStore";
 
 //TODO: Validation and Login
 
 export default {
   setup() {
+    const { setEmail, setId, setToken, email } = useSession();
     const signUpData = reactive({
       email: "",
       password: "",
@@ -154,8 +156,15 @@ export default {
               )
               .then((cred) => {
                 console.log(cred);
+                setEmail(cred.user.email);
+                setId(cred.user.id);
+                return cred.user.getIdToken();
+              })
+              .then((idToken) => {
+                setToken(idToken);
+                console.log("USER CREATED: " + email.value);
+                router.push(Path.HOME);
               });
-            router.push(Path.HOME);
           }
         })
         .catch((error) => {

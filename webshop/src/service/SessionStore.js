@@ -5,16 +5,13 @@ const empty = "";
 
 const state = reactive({
   token: empty, //session token
-  role: "ADMIN", //role admin or customer
+  role: "CUSTOMER", //role admin or customer
   email: empty, //email of active user
   uid: empty, //authorization header
 });
 
-function createSession(inputToken, inputEmail, uid) {
-  state.token = inputToken;
-  state.role = "TESTROLE";
-  state.email = inputEmail;
-  state.uid = uid;
+function setRole(role) {
+  state.role = role;
 }
 
 function setEmail(inputEmail) {
@@ -32,7 +29,7 @@ function setId(inputId) {
 
 function resetSession() {
   state.token = empty;
-  state.role = empty;
+  state.role = "CUSTOMER";
   state.email = empty;
   state.uid = empty;
 }
@@ -44,10 +41,10 @@ export default function useSession() {
     header: computed(() => state.header),
     uid: computed(() => state.uid),
     token: computed(() => state.token),
-    createSession,
     resetSession,
     setId,
     setEmail,
     setToken,
+    setRole,
   };
 }

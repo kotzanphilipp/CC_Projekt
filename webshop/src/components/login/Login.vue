@@ -49,7 +49,7 @@ import firebase from "firebase";
 export default {
   name: "Login",
   setup() {
-    const { setEmail, setId, setToken, email } = useSession();
+    const { setEmail, setId, setToken, email, setRole, role } = useSession();
 
     const credentials = reactive({
       email: "",
@@ -62,38 +62,6 @@ export default {
     });
 
     async function login() {
-      /*
-      await axios
-        .post(Endpoint.LOGIN, credentials)
-        .then((response) => {
-          const data = response.data;
-          createSession(data.token, data.role, data.email);
-          router.push(Path.HOME);
-        })
-        .catch((error) => {
-          if (error.response) {
-
-             * The request was made and the server responded with a
-             * status code that falls out of the range of 2xx
-
-            responseMessage.message = "Login fehlgeschlagen";
-            responseMessage.show = true;
-            throw new Error(error);
-          } else if (error.request) {
-
-             * The request was made but no response was received, `error.request`
-             * is an instance of XMLHttpRequest in the browser and an instance
-             * of http.ClientRequest in Node.js
-
-            window.alert(error.request);
-            throw new Error(error.request);
-          } else {
-            // Something happened in setting up the request and triggered an Error
-            window.alert(error.message);
-            throw new Error(error.message);
-          }
-        }); */
-
       const email = credentials.email.toString().trim();
       firebase
         .auth()
@@ -105,8 +73,19 @@ export default {
         })
         .then((idToken) => {
           setToken(idToken);
-          router.push(Path.HOME);
+          checkAdminRole();
         });
+    }
+
+    async function checkAdminRole() {
+      const isAdmin = firebase.functions().httpsCallable("checkAdminRole");
+      isAdmin().then((result) => {
+        if (result.data) {
+          setRole("ADMIN");
+        }
+        console.log("ROLE: ", role.value);
+        router.push(Path.HOME);
+      });
     }
 
     function signUp() {
@@ -119,6 +98,7 @@ export default {
       responseMessage,
       login,
       signUp,
+      checkAdminRole,
     };
   },
 };
