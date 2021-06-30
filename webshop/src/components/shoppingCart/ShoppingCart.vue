@@ -40,16 +40,6 @@
                         >
                       </p>
                     </div>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <a
-                        @click="deleteProductFromCard(c)"
-                        class="btn btn-danger"
-                      >
-                        Löschen
-                      </a>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -93,6 +83,13 @@
                 class="btn btn-primary"
               >
                 Jetzt Kaufen
+              </a>
+              <a
+                @click="warenkorbLeeren"
+                class="btn btn-danger"
+                style="margin-left:5%"
+              >
+                Warenkorb leeren
               </a>
             </div>
           </div>
@@ -162,30 +159,13 @@ export default {
       });
     }
 
-    function deleteProductFromCard(/*c*/) {
-      // console.log("c:", c);
-      // console.log("localStorage['cart']:", localStorage["cart"]);
-      // console.log(JSON.parse(localStorage["cart"]));
-      // for (var item in JSON.parse(localStorage["cart"])) {
-      //   console.log(item.id);
-      // }
-      // console.log(produktNames.value);
+    function warenkorbLeeren() {
+      localStorage.removeItem("cart");
+      cart.splice(0);
+      console.log(cart);
     }
 
     async function bestellungAbgesendet() {
-      // await axios
-      //   .post(
-      //     "https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",
-      //     {
-      //       bestellNr: uniqID,
-      //       email: email,
-      //       gesamt: sumWithTax.value,
-      //       produkt: produktNames.value,
-      //     }
-      //   )
-      //   .then(function() {
-      //     router.push(Path.ADDORDER);
-      //   });
       if (localStorage["cart"] != null) {
         if (uid.value != "") {
           cart.push(...JSON.parse(localStorage["cart"]));
@@ -225,7 +205,7 @@ export default {
       cart,
       sum,
       sumWithTax,
-      deleteProductFromCard,
+      warenkorbLeeren,
       addProductNames,
       bestellungAbgesendet,
     };
