@@ -124,26 +124,23 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   // logout wenn the page is reloaded
-  window.addEventListener("unload", function() {
+  window.addEventListener("unload", async function() {
     console.log("Page Reloaded !!!!!");
-    logoutService.logout();
+    await logoutService.logout();
   });
 
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const isAuthenticated = firebase.auth().currentUser;
   const loggedIn = to.matched.some((record) => record.meta.loggedIn);
 
-  const { role } = useSession();
+  const { role, uid } = useSession();
   const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
 
   if (requiresAuth && !isAuthenticated) {
     next("/login");
     /* if the User already Loggedin */
-  } else if (loggedIn && isAuthenticated) {
+  } else if (loggedIn && isAuthenticated && uid.value != "") {
     next("/overview");
-    // TODO => isAuthenticated bzw. firebase.auth().currentUser; sollte im lokal storage gespeichert werden, denn wenn man
-    // in der URL z.B. /login eingibt, dann wird man im login seite landen obwohl man schon eingeloggt ist,
-    // weil firebase.auth().currentUser; dauert lange bis sie eine antwort bekommt
   } else if (requiresAdmin && role.value != "ADMIN") {
     next("/overview");
   } else {

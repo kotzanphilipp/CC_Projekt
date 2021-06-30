@@ -157,12 +157,15 @@ export default {
               .then((cred) => {
                 console.log(cred);
                 setEmail(cred.user.email);
+                console.log("cred.user.email: ", cred.user.email);
+                console.log("cred.user.id: ", cred.user.id);
                 setId(cred.user.id);
                 return cred.user.getIdToken();
               })
               .then((idToken) => {
                 setToken(idToken);
                 console.log("USER CREATED: " + email.value);
+                console.log("idToken: " + idToken);
                 router.push(Path.HOME);
               });
           }

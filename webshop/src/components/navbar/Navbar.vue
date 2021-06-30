@@ -52,7 +52,7 @@
 
         <li>
           <router-link to="/makeadmin" class="deco-none" v-if="role == 'ADMIN'">
-            <a class="nav-link">Add an Admin</a>
+            <a class="nav-link">Make Admin</a>
           </router-link>
         </li>
 
@@ -71,7 +71,9 @@
             <a class="nav-link">Login</a>
           </router-link>
         </li>
-
+        <li>
+          <button @click="func">test</button>
+        </li>
         <li>
           <LogoutButton />
         </li>
@@ -87,11 +89,12 @@ import LogoutButton from "@/components/logoutButton/Logout.vue";
 export default {
   name: "Navbar",
   data() {
-    const { role, uid } = useSession();
+    const { role, uid, email } = useSession();
     // console.log("role !!!!!", role);
     return {
       role: role,
       uid: uid,
+      email: email,
     };
   },
   components: {
@@ -101,6 +104,7 @@ export default {
     func() {
       console.log("this.role: ", this.role);
       console.log("this.uid: ", this.uid);
+      console.log("this.email: ", this.email);
     },
   },
 };

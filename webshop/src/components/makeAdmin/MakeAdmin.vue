@@ -1,7 +1,9 @@
 <template>
   <div class="makeAdmin">
-    <input type="email" v-model="adminemail" placeholder="admin@webshop.de" />
-    <button @click="send" class="btn btn-primary">Make Admin</button>
+    <div class="container-center">
+      <input type="email" v-model="adminemail" placeholder="admin@webshop.de" />
+      <button @click="send" class="btn btn-primary">Make Admin</button>
+    </div>
   </div>
 </template>
 
