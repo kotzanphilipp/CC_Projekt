@@ -46,12 +46,6 @@
         </li>
 
         <li>
-          <router-link to="/orders" class="deco-none">
-            <a class="nav-link">Bestellungen</a>
-          </router-link>
-        </li>
-
-        <li>
           <router-link to="/admin" class="deco-none">
             <a class="nav-link">Admin</a>
           </router-link>
@@ -59,7 +53,7 @@
 
         <li>
           <router-link to="/userOrders" class="deco-none">
-            <a class="nav-link">UserBestellungen</a>
+            <a class="nav-link">Meine Bestellungen</a>
           </router-link>
         </li>
 

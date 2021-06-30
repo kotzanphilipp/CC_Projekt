@@ -18,6 +18,12 @@
         Alle Users anzeigen
       </button>
     </router-link>
+
+    <router-link to="/showAllOrders" class="deco-none">
+      <button class="btn btn-primary admin-buttons">
+        Alle Bestellungen anzeigen
+      </button>
+    </router-link>
   </div>
 </template>
 

@@ -10,7 +10,7 @@ import AddProduct from "@/components/addProduct/AddProduct.vue";
 import EditProduct from "@/components/editProduct/EditProduct.vue";
 import ShowAllProducts from "@/components/showAllProducts/ShowAllProducts.vue";
 import ShowAllUsers from "@/components/showAllUsers/ShowAllUsers.vue";
-import Orders from "@/components/orders/Orders.vue";
+import ShowAllOrders from "@/components/showAllOrders/ShowAllOrders.vue";
 import AddOrder from "@/components/addOrder/AddOrder.vue";
 import { Path } from "../constants/Path";
 import GoogleMap from "../components/googleMap/GoogleMap";
@@ -96,9 +96,9 @@ const routes = [
     component: AddOrder,
   },
   {
-    path: Path.ORDERS,
-    name: "Orders",
-    component: Orders,
+    path: Path.SHOWALLORDERS,
+    name: "ShowAllOrders",
+    component: ShowAllOrders,
     meta: { requiresAuth: true },
   },
   {
