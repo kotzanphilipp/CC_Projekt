@@ -36,7 +36,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { onBeforeMount, reactive } from "vue";
 import useSession from "@/service/SessionStore";
 
@@ -72,11 +71,14 @@ export default {
 
     async function deleteNutzer(nutzer, index) {
       console.log("nutzer_Email: " + nutzer.email);
-      axios
-        .delete(
-          "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo/delete/" +
-            nutzer.email
-        )
+      console.log(token.value);
+      await fetch(
+        "https://europe-west3-webshop-316612.cloudfunctions.net/nutzerinfo/delete/"+nutzer.email,
+        {
+          method: "DELETE",
+          headers: { token: token.value },
+        }
+      )
         .then(function() {
           nutzern.splice(index, 1);
           console.log;

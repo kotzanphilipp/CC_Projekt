@@ -57,26 +57,23 @@
 <script>
 import axios from "axios";
 import { onBeforeMount, reactive } from "vue";
-
+import useSession from "@/service/SessionStore";
 export default {
   name: "ShowAllProducts",
-
   setup() {
     let products = reactive([]);
-
+    const { token } = useSession();
     const cloudfunctions_produkts_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/produkte/";
     const cloudfunctions_imageService_GET_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/getURL?product=";
     const cloudfunctions_imageService_DELETE_API_URL =
       "https://europe-west3-webshop-316612.cloudfunctions.net/imageService/delete?product=";
-
     onBeforeMount(() => {
       fetchProducts().then(function() {
         fetchProductsURL();
       });
     });
-
     async function fetchProducts() {
       await axios
         .get(cloudfunctions_produkts_API_URL)
@@ -88,7 +85,6 @@ export default {
           console.log(error);
         });
     }
-
     async function fetchProductsURL() {
       products.forEach((product) => {
         axios
@@ -101,11 +97,13 @@ export default {
           });
       });
     }
-
     async function deleteProdukt(product, index) {
       console.log("product_ID: " + product.id);
-      axios
-        .delete(cloudfunctions_produkts_API_URL + product.id)
+      console.log("token is:", token.value);
+      await fetch(cloudfunctions_produkts_API_URL + product.id, {
+        method: "DELETE",
+        headers: { token: token.value },
+      })
         .then(function() {
           deleteProduktImage(product);
           // Delete The Product From the Array
@@ -114,12 +112,17 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
+          
         });
     }
-
     async function deleteProduktImage(product) {
-      axios
-        .get(cloudfunctions_imageService_DELETE_API_URL + product.produktImage)
+      await fetch(
+        cloudfunctions_imageService_DELETE_API_URL + product.produktImage,
+        {
+          method: "GET",
+          headers: { token: token.value },
+        }
+      )
         .then(function() {
           console.log("Product Image is Deleted Successfully");
         })
@@ -127,7 +130,6 @@ export default {
           console.log(error);
         });
     }
-
     return {
       products,
       deleteProduktImage,
@@ -136,6 +138,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .btn-all-products {
   margin: 1%;
