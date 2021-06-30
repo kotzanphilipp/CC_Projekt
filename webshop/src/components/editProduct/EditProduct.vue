@@ -38,14 +38,6 @@
           v-model="form.productDescription"
           required
         /><br /><br />
-        <label for="productImage">Artikel Bild hochladen:</label><br />
-        <input
-          type="file"
-          class="inputFields"
-          id="productImage"
-          name="productImage"
-          v-on:change="onChange"
-        /><br /><br />
         <input type="submit" class="btn btn-success" value="hinzufügen" />
       </form>
     </div>
