@@ -40,6 +40,16 @@
                         >
                       </p>
                     </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <a
+                        @click="deleteProductFromCard(c)"
+                        class="btn btn-danger"
+                      >
+                        Löschen
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -78,8 +88,11 @@
                   >
                 </li>
               </ul>
-              <a @click="bestellungAbgesendet(nutzer, index)" class="btn btn-danger">
-              Jetzt Kaufen
+              <a
+                @click="bestellungAbgesendet(nutzer, index)"
+                class="btn btn-primary"
+              >
+                Jetzt Kaufen
               </a>
             </div>
           </div>
@@ -92,10 +105,9 @@
 <script>
 import { onMounted, reactive, ref } from "vue";
 import useSession from "@/service/SessionStore";
-import axios from "axios";
+// import axios from "axios";
 import { Path } from "@/constants/Path";
 import router from "@/router/index";
-
 
 export default {
   name: "ShoppingCart",
@@ -105,23 +117,31 @@ export default {
     let sumWithTax = ref(0);
     let uniqID = ref(0);
     let produktNames = ref("");
-    const {email} = useSession();
+    const { email, uid, token } = useSession();
 
     onMounted(() => {
       readLocalStorageCart()
         .then(function() {
-          calcCartSum().then(getUniqID()).then(function() {
-            console.log("calculating sum...");
-            console.log("sum is: " + sum.value);
-          });
-        }).then(addProductNames())
+          calcCartSum()
+            .then(getUniqID())
+            .then(function() {
+              console.log("calculating sum...");
+              console.log("sum is: " + sum.value);
+            });
+        })
+        .then(addProductNames())
         .catch(function(err) {
           console.log(err);
         });
     });
 
     async function readLocalStorageCart() {
-      cart.push(...JSON.parse(localStorage["cart"]));
+      //localStorage.removeItem("cart");
+      if (localStorage["cart"] != null) {
+        cart.push(...JSON.parse(localStorage["cart"]));
+      } else {
+        console.log(localStorage["cart"]);
+      }
     }
 
     async function calcCartSum() {
@@ -131,36 +151,77 @@ export default {
       sumWithTax.value = 1.19 * sum.value;
     }
 
-    async function getUniqID(){
-      uniqID = Math.round(+new Date()/1000);
+    async function getUniqID() {
+      uniqID = Math.round(+new Date() / 1000);
     }
 
-    async function addProductNames(){
-      cart.forEach(function(item){
-        produktNames.value += item.produktName;
-      })
+    async function addProductNames() {
+      cart.forEach(function(item) {
+        produktNames.value += item.produktName + ", ";
+        console.log(item.produktName);
+      });
     }
 
-    async function bestellungAbgesendet(){
-        await axios
-        .post("https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",{
-            bestellNr: uniqID,
-            email: email,
-            gesamt: sumWithTax.value,
-            produkt: produktNames.value
-        }
-        ).then(function(){
-          router.push(Path.ADDORDER);
-        })
+    function deleteProductFromCard(/*c*/) {
+      // console.log("c:", c);
+      // console.log("localStorage['cart']:", localStorage["cart"]);
+      // console.log(JSON.parse(localStorage["cart"]));
+      // for (var item in JSON.parse(localStorage["cart"])) {
+      //   console.log(item.id);
+      // }
+      // console.log(produktNames.value);
+    }
 
-        }    
+    async function bestellungAbgesendet() {
+      // await axios
+      //   .post(
+      //     "https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",
+      //     {
+      //       bestellNr: uniqID,
+      //       email: email,
+      //       gesamt: sumWithTax.value,
+      //       produkt: produktNames.value,
+      //     }
+      //   )
+      //   .then(function() {
+      //     router.push(Path.ADDORDER);
+      //   });
+      if (localStorage["cart"] != null) {
+        cart.push(...JSON.parse(localStorage["cart"]));
+        console.log(token.value);
+        console.log(uid.value);
+        await fetch(
+          "https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              token: token.value,
+              uid: uid.value,
+            },
+            body: JSON.stringify({
+              email: email.value,
+              bestellNr: uniqID,
+              gesamt: sumWithTax.value,
+              produkt: produktNames.value,
+            }),
+          }
+        )
+          .then(console.log("The Product is Successfully Created"))
+          .then(router.push(Path.ADDORDER));
+        //.catch((error) => console.log("Error", error));
+      } else {
+        alert("Ihren Warenkorb ist leer !!");
+      }
+    }
 
     return {
       cart,
       sum,
       sumWithTax,
+      deleteProductFromCard,
+      addProductNames,
       bestellungAbgesendet,
-      addProductNames
     };
   },
 };

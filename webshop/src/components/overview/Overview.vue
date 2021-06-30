@@ -80,12 +80,14 @@ export default {
       cart.forEach(function() {
         cart.pop();
       });
-      var data = JSON.parse(localStorage["cart"]);
-      data.forEach(function(item) {
-        if (item != null) {
-          cart.push(item);
-        }
-      });
+      if (localStorage["cart"] != null) {
+        var data = JSON.parse(localStorage["cart"]);
+        data.forEach(function(item) {
+          if (item != null) {
+            cart.push(item);
+          }
+        });
+      }
     }
 
     function addToCart(product) {

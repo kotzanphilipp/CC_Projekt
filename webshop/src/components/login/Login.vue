@@ -99,13 +99,14 @@ export default {
         .auth()
         .signInWithEmailAndPassword(email, credentials.password)
         .then((cred) => {
-          setEmail(cred.user.email)
-          setId(cred.user.id)
-          return cred.user.getIdToken()})
-        .then(idToken => {
+          setEmail(cred.user.email);
+          setId(cred.user.uid);
+          return cred.user.getIdToken();
+        })
+        .then((idToken) => {
           setToken(idToken);
           router.push(Path.HOME);
-        })
+        });
     }
 
     function signUp() {
@@ -117,7 +118,7 @@ export default {
       credentials,
       responseMessage,
       login,
-      signUp
+      signUp,
     };
   },
 };

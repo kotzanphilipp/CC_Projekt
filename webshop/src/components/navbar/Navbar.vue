@@ -51,9 +51,15 @@
           </router-link>
         </li>
 
-         <li>
+        <li>
           <router-link to="/admin" class="deco-none">
             <a class="nav-link">Admin</a>
+          </router-link>
+        </li>
+
+        <li>
+          <router-link to="/userOrders" class="deco-none">
+            <a class="nav-link">UserBestellungen</a>
           </router-link>
         </li>
 

@@ -26,6 +26,7 @@ function setToken(inputToken) {
 }
 
 function setId(inputId) {
+  console.log("inputId: ", inputId);
   state.uid = inputId;
 }
 
@@ -47,6 +48,6 @@ export default function useSession() {
     resetSession,
     setId,
     setEmail,
-    setToken
+    setToken,
   };
 }

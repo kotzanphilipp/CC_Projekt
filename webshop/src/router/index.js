@@ -15,6 +15,7 @@ import AddOrder from "@/components/addOrder/AddOrder.vue";
 import { Path } from "../constants/Path";
 import GoogleMap from "../components/googleMap/GoogleMap";
 import MakeAdmin from "@/components/makeAdmin/MakeAdmin.vue";
+import UserOrders from "@/components/userOrders/UserOrders.vue";
 
 // import { useRouter, useRoute } from "vue-router";
 import firebase from "firebase";
@@ -98,6 +99,12 @@ const routes = [
     path: Path.ORDERS,
     name: "Orders",
     component: Orders,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: Path.USERORDERS,
+    name: "UserOrders",
+    component: UserOrders,
     meta: { requiresAuth: true },
   },
 ];
