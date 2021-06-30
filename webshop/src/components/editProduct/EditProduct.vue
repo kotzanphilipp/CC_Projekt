@@ -79,24 +79,10 @@ export default {
         }),
       })
         //then((res) => console.log(res))
-        // .then(this.imageChanged())
         .then(console.log("The Product is Successfully Updated"))
         .catch((error) => console.log("Error", error));
-      this.imageChanged();
       // Redirect the Page automatically to "ShowAllProducts" Page
       this.$router.push({ name: "ShowAllProducts" });
-    },
-    async imageChanged() {
-      if (this.imageChangedBoolean) {
-        console.log("The image is Changed !!!");
-        return true;
-      } else {
-        console.log("The Image didn't Change");
-        return false;
-      }
-    },
-    onChange() {
-      this.imageChangedBoolean = true;
     },
   },
   created() {
