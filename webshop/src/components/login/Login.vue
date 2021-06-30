@@ -69,10 +69,12 @@ export default {
         .then((cred) => {
           setEmail(cred.user.email);
           setId(cred.user.uid);
+          console.log("cred.user.uid: ", cred.user.uid);
           return cred.user.getIdToken();
         })
         .then((idToken) => {
           setToken(idToken);
+          console.log("idToken !!!!!!!:", idToken);
           checkAdminRole();
         });
     }

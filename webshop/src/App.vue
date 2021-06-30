@@ -15,6 +15,11 @@ export default {
   components: {
     Navbar,
   },
+  // Set Overview as HomePage
+  mounted() {
+    let root = "/overview";
+    this.$router.push({ path: root });
+  },
 };
 </script>
 

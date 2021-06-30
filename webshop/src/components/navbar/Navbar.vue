@@ -21,8 +21,7 @@
             <a class="nav-link">Artikelübersicht</a>
           </router-link>
         </li>
-        <!--  -->
-        <li class="nav-item" v-if="role == 'CUSTOMER' && uid">
+        <li class="nav-item" v-if="uid">
           <router-link to="/user" class="deco-none">
             <a class="nav-link">Konto</a>
           </router-link>

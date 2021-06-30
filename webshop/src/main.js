@@ -23,7 +23,7 @@ app.use(router);
 app
   .use(VueGoogleMaps, {
     load: {
-      key: "AIzaSyDvNvMpi3KSha2QEgGsWuCqMqSDruQBfAU",
+      key: "AIzaSyCuJ50z6hM8vQf2Lvi29exY7S8nlqgLs4E",
     },
   })
   .mount("#app");
