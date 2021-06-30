@@ -16,6 +16,7 @@ import { Path } from "../constants/Path";
 import GoogleMap from "../components/googleMap/GoogleMap";
 import MakeAdmin from "@/components/makeAdmin/MakeAdmin.vue";
 import UserOrders from "@/components/userOrders/UserOrders.vue";
+import useSession from "@/service/SessionStore";
 
 // import { useRouter, useRoute } from "vue-router";
 import firebase from "firebase";
@@ -59,26 +60,37 @@ const routes = [
     path: Path.ADMIN,
     name: "Admin",
     component: Admin,
+    meta: { requiresAdmin: true },
   },
   {
     path: Path.ADDPRODUCT,
     name: "AddProduct",
     component: AddProduct,
+    meta: { requiresAdmin: true },
   },
   {
     path: Path.EDITPRODUCT,
     name: "EditProduct",
     component: EditProduct,
+    meta: { requiresAdmin: true },
   },
   {
     path: Path.SHOWALLPRODUCTS,
     name: "ShowAllProducts",
     component: ShowAllProducts,
+    meta: { requiresAdmin: true },
   },
   {
     path: Path.SHOWALLUSERS,
     name: "ShowAllUsers",
     component: ShowAllUsers,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: Path.SHOWALLORDERS,
+    name: "ShowAllOrders",
+    component: ShowAllOrders,
+    meta: { requiresAdmin: true },
   },
   {
     path: Path.GOOGLEMAP,
@@ -94,12 +106,6 @@ const routes = [
     path: Path.ADDORDER,
     name: "AddOrder",
     component: AddOrder,
-  },
-  {
-    path: Path.SHOWALLORDERS,
-    name: "ShowAllOrders",
-    component: ShowAllOrders,
-    meta: { requiresAuth: true },
   },
   {
     path: Path.USERORDERS,
@@ -119,7 +125,9 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = firebase.auth().currentUser;
   const loggedIn = to.matched.some((record) => record.meta.loggedIn);
 
-  console.log("isauthenticated", isAuthenticated);
+  const { role } = useSession();
+  const requiresAdmin = to.matched.some((record) => record.meta.requiresAdmin);
+
   if (requiresAuth && !isAuthenticated) {
     next("/login");
     /* if the User already Loggedin */
@@ -128,6 +136,8 @@ router.beforeEach((to, from, next) => {
     // TODO => isAuthenticated bzw. firebase.auth().currentUser; sollte im lokal storage gespeichert werden, denn wenn man
     // in der URL z.B. /login eingibt, dann wird man im login seite landen obwohl man schon eingeloggt ist,
     // weil firebase.auth().currentUser; dauert lange bis sie eine antwort bekommt
+  } else if (requiresAdmin && role.value != "ADMIN") {
+    next("/overview");
   } else {
     next();
   }
