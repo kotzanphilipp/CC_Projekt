@@ -17,6 +17,7 @@ import GoogleMap from "../components/googleMap/GoogleMap";
 import MakeAdmin from "@/components/makeAdmin/MakeAdmin.vue";
 import UserOrders from "@/components/userOrders/UserOrders.vue";
 import useSession from "@/service/SessionStore";
+import logoutService from "@/service/LogoutService";
 
 // import { useRouter, useRoute } from "vue-router";
 import firebase from "firebase";
@@ -93,14 +94,15 @@ const routes = [
     meta: { requiresAdmin: true },
   },
   {
-    path: Path.GOOGLEMAP,
-    name: "GoogleMap",
-    component: GoogleMap,
-  },
-  {
     path: Path.MAKEADMIN,
     name: "MakeAdmin",
     component: MakeAdmin,
+    meta: { requiresAdmin: true },
+  },
+  {
+    path: Path.GOOGLEMAP,
+    name: "GoogleMap",
+    component: GoogleMap,
   },
   {
     path: Path.ADDORDER,
@@ -121,6 +123,12 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  // logout wenn the page is reloaded
+  window.addEventListener("unload", function() {
+    console.log("Page Reloaded !!!!!");
+    logoutService.logout();
+  });
+
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   const isAuthenticated = firebase.auth().currentUser;
   const loggedIn = to.matched.some((record) => record.meta.loggedIn);

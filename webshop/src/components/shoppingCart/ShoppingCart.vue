@@ -187,29 +187,35 @@ export default {
       //     router.push(Path.ADDORDER);
       //   });
       if (localStorage["cart"] != null) {
-        cart.push(...JSON.parse(localStorage["cart"]));
-        console.log(token.value);
-        console.log(uid.value);
-        await fetch(
-          "https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              token: token.value,
-              uid: uid.value,
-            },
-            body: JSON.stringify({
-              email: email.value,
-              bestellNr: uniqID,
-              gesamt: sumWithTax.value,
-              produkt: produktNames.value,
-            }),
-          }
-        )
-          .then(console.log("The Product is Successfully Created"))
-          .then(router.push(Path.ADDORDER));
-        //.catch((error) => console.log("Error", error));
+        if (uid.value != "") {
+          cart.push(...JSON.parse(localStorage["cart"]));
+          console.log(token.value);
+          console.log(uid.value);
+          await fetch(
+            "https://europe-west3-webshop-316612.cloudfunctions.net/bestellungen",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                token: token.value,
+                uid: uid.value,
+              },
+              body: JSON.stringify({
+                email: email.value,
+                bestellNr: uniqID,
+                gesamt: sumWithTax.value,
+                produkt: produktNames.value,
+              }),
+            }
+          )
+            .then(console.log("The Product is Successfully Created"))
+            .then(router.push(Path.ADDORDER));
+          //.catch((error) => console.log("Error", error));
+        } else {
+          alert(
+            "Sie müssen sich bei uns registrieren um ein Artikel zu kaufen !!"
+          );
+        }
       } else {
         alert("Ihren Warenkorb ist leer !!");
       }

@@ -1,6 +1,6 @@
 <template>
   <!-- v-if="uid != empty" -->
-  <a class="nav-link logout-nav-link" @click="handleClick">
+  <a class="nav-link logout-nav-link" @click="handleClick" v-if="uid">
     Logout
   </a>
 </template>
